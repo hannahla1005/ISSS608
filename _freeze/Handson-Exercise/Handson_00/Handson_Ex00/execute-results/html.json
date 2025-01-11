@@ -1,0 +1,15 @@
+{
+  "hash": "674ddf36aef8f16e7486042496ac8254",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Handson Exercise 00: working with tidyverse\"\nauthor: \"TzuTing Huang\"\ndate-modified: \"last-modified\"\nexecute:\n  echo: true\n  eval: true\n  warning: false\n  freeze: true\n---\n\n\n\n\n\nGeetting started\n\nLoad tidyverse onto r environment by using the code chunk below.\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\npacman::p_load(tidyverse)\n```\n:::\n\n\n\n\n\nimporting data\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrealis2019 <- read_csv(\"data/REALIS2019.csv\")\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\npopdata_fat <- read_csv(\"data/PopData2019_fat.csv\")\n```\n:::\n\n\n\n\n\nPivoting data\n\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\npopdata_long <- popdata_fat %>%\n  pivot_longer(c(3:21),\n               names_to = \"Age group\",\n               values_to = \"Population\")\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\nwrite_rds(popdata_long, \"rds/popdata_long.rds\")\n```\n:::\n\n::: {.cell}\n\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -12,5 +12,19 @@
     "title": "About",
     "section": "",
     "text": "In this webpage, you will find my learning jurney and deliverables of ISSS608 Visual Analytics and Applications."
+  },
+  {
+    "objectID": "Handson-Exceriise/Handson_00/Handson_Ex00.html",
+    "href": "Handson-Exceriise/Handson_00/Handson_Ex00.html",
+    "title": "Handson Exercise 00: working with tidyverse",
+    "section": "",
+    "text": "Geetting started\nLoad tidyverse onto r environment by using the code chunk below.\n\npacman::p_load(tidyverse)\n\nimporting data\n\nrealis2019 &lt;- read_csv(\"data/REALIS2019.csv\")"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_00/Handson_Ex00.html",
+    "href": "Handson-Exercise/Handson_00/Handson_Ex00.html",
+    "title": "Handson Exercise 00: working with tidyverse",
+    "section": "",
+    "text": "Geetting started\nLoad tidyverse onto r environment by using the code chunk below.\n\npacman::p_load(tidyverse)\n\nimporting data\n\nrealis2019 &lt;- read_csv(\"data/REALIS2019.csv\")\n\n\npopdata_fat &lt;- read_csv(\"data/PopData2019_fat.csv\")\n\nPivoting data\n\npopdata_long &lt;- popdata_fat %&gt;%\n  pivot_longer(c(3:21),\n               names_to = \"Age group\",\n               values_to = \"Population\")\n\n\nwrite_rds(popdata_long, \"rds/popdata_long.rds\")"
   }
 ]

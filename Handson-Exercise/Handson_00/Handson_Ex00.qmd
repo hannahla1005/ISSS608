@@ -1,0 +1,63 @@
+---
+title: "Handson Exercise 00: working with tidyverse"
+author: "TzuTing Huang"
+date-modified: "last-modified"
+execute:
+  echo: true
+  eval: true
+  warning: false
+  freeze: true
+---
+
+Geetting started
+
+Load tidyverse onto r environment by using the code chunk below.
+
+```{r}
+pacman::p_load(tidyverse)
+```
+
+importing data
+
+```{r}
+#| eval: FALSE
+realis2019 <- read_csv("data/REALIS2019.csv")
+```
+
+```{r}
+#| eval: FALSE
+popdata_fat <- read_csv("data/PopData2019_fat.csv")
+```
+
+Pivoting data
+
+```{r}
+#| eval: FALSE
+popdata_long <- popdata_fat %>%
+  pivot_longer(c(3:21),
+               names_to = "Age group",
+               values_to = "Population")
+```
+
+```{r}
+#| eval: FALSE
+write_rds(popdata_long, "rds/popdata_long.rds")
+```
+
+```{r}
+#| echo: FALSE
+popdata_long <- read_rds("rds/popdata_long.rds")
+```
+
+Working with dplyr
+
+```{r}
+#| eval: FALSE
+realis2019_selected <- realis2019 %>%
+  select(`Project Name`,
+         `Transacted Price ($)`,
+         `Type of sale`,
+         `Unit Price ($ psm)`,
+         `Property Type')
+realis2019_selected
+```
