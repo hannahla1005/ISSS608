@@ -9,6 +9,8 @@ website:
       menu:
       - text: "Hands-on Exercise 0"
         href: Handson-Exercise/Handson_00/Handson_Ex00.html
+      - text: "Hands-on Exercise 1"
+        href: Handson-Exercise/Handson_01/Handson_Ex01.html
     - text: "In-Class Exercise"
       menu:
       - text: "In-class Exercise 1"
@@ -25,7 +27,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
+      - pulse
       - brand
     css: styles.css
     toc: true
