@@ -183,7 +183,6 @@ ggplot(data=exam_data,
 
 -   The code chunk below changes the interior colour of the histogram (i.e. *fill*) by using sub-group of *aesthetic()*.
 
-
 ```{r}
 ggplot(data=exam_data, 
        aes(x= MATHS, 
@@ -191,7 +190,6 @@ ggplot(data=exam_data,
   geom_histogram(bins=20, 
                  color="grey30")
 ```
-
 
 ## 1.7.6 Geometric Objects: geom-density()
 
