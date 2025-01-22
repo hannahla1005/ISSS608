@@ -51,7 +51,6 @@ exam_data <- read_csv("Exam_data.csv")
 One of the challenge in plotting statistical graph is annotation, especially with large number of data points.
 
 ```{r}
-#| eval: FALSE
 ggplot(data=exam_data, 
        aes(x= MATHS, 
            y=ENGLISH)) +
