@@ -1,6 +1,6 @@
 ---
 title: "Handson Exercise 00: working with tidyverse"
-author: "TzuTing Huang"
+author: "TzuTing,Huang"
 date-modified: "last-modified"
 execute:
   echo: true

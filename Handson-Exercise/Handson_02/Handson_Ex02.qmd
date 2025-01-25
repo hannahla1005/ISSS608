@@ -1,5 +1,5 @@
 ---
-title: "Handson_Ex02"
+title: "Handson Exercise 02"
 author: "TzuTing,Huang"
 date-modified: "last-modified"
 execute:

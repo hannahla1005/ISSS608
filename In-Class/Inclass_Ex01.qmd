@@ -1,0 +1,10 @@
+---
+title: "In Class Exercise 01"
+author: "TzuTing Huang, (Hannah)"
+---
+
+# Create Tableau Dashboard 
+
+This report analyzes annual and monthly sales and profits for the Superstore across different regions. The primary objective is to identify trends and key performance indicators that can support data-driven decision-making. By understanding regional performance variations, businesses can develop more effective strategies.
+
+![](images/Dashboard 1.png)
