@@ -20,7 +20,7 @@ In this chapter, you will be introduced to several ggplot2 extensions for creati
 
 ## **2.2 Getting started**
 
-### 2.2.1 Installing and loading the required libraries
+### **2.2.1 Installing and loading the required libraries**
 
 In this exercise, beside tidyverse, four R packages will be used. They are:
 
@@ -40,7 +40,7 @@ pacman::p_load(ggrepel, patchwork,
                tidyverse) 
 ```
 
-### 2.2.2 Importing data
+### **2.2.2 Importing data**
 
 ```{r}
 exam_data <- read_csv("Exam_data.csv")
@@ -67,7 +67,7 @@ ggplot(data=exam_data,
 
 We simply replace `geom_text()` by geom_text_repel() and `geom_label()` by geom_label_repel.
 
-### 2.3.1 Working with ggrepel
+### **2.3.1 Working with ggrepel**
 
 ```{r}
 ggplot(data=exam_data, 
@@ -114,7 +114,7 @@ ggplot(data=exam_data,
 
 ```
 
-### 2.4.2 Working with hrbthems package
+### **2.4.2 Working with hrbthems package**
 
 [**hrbrthemes**](https://cran.r-project.org/web/packages/hrbrthemes/index.html) package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.
 
@@ -186,7 +186,7 @@ p3 <- ggplot(data=exam_data,
 print(p3)
 ```
 
-### 2.5.1 Creating Composite Graphics: pathwork methods
+### **2.5.1 Creating Composite Graphics: pathwork methods**
 
 There are several ggplot2 extension’s functions support the needs to prepare composite figure by combining several graphs such as [`grid.arrange()`](https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html) of **gridExtra** package and [`plot_grid()`](https://wilkelab.org/cowplot/reference/plot_grid.html) of [**cowplot**](https://wilkelab.org/cowplot/index.html) package. In this section, I am going to shared with you an ggplot2 extension called [**patchwork**](https://patchwork.data-imaginist.com/) which is specially designed for combining separate ggplot2 graphs into a single figure.
 
@@ -206,7 +206,7 @@ Figure in the tabset below shows a composite of two histograms created using pat
 p1 + p2
 ```
 
-### 2.5.3 Combining three ggplot2 graphs
+### **2.5.3 Combining three ggplot2 graphs**
 
 We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using:
 
@@ -222,7 +222,7 @@ We can plot more complex composite by using appropriate operators. For example, 
 
 To learn more about, refer to [Plot Assembly](https://patchwork.data-imaginist.com/articles/guides/assembly.html).
 
-### 2.5.4 Creating a composite figure with tag
+### **2.5.4 Creating a composite figure with tag**
 
 In order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.
 
@@ -231,7 +231,7 @@ In order to identify subplots in text, patchwork also provides auto-tagging capa
   plot_annotation(tag_levels = 'I')
 ```
 
-### 2.5.5 Creating figure with insert
+### **2.5.5 Creating figure with insert**
 
 Beside providing functions to place plots next to each other based on the provided layout. With [`inset_element()`](https://patchwork.data-imaginist.com/reference/inset_element.html) of **patchwork**, we can place one or several plots or graphic elements freely on top or below another plot.
 
@@ -245,7 +245,7 @@ p3 + inset_element(p2,
                    top = 1)
 ```
 
-### 2.5.6 Creating a composite figure by using patchwork and ggtheme
+### **2.5.6 Creating a composite figure by using patchwork and ggtheme**
 
 Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.
 
