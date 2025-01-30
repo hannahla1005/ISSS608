@@ -8,7 +8,7 @@
 
 <meta name="author" content="TzuTing,Huang">
 
-<title>Handson_Ex02 – ISSS608 Coursework</title>
+<title>2 Beyond ggplot2 Fundamentals – ISSS608 Coursework</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -217,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>2.1 Overview</strong></a></li>
   <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><strong>2.2 Getting started</strong></a>
   <ul class="collapse">
-  <li><a href="#installing-and-loading-the-required-libraries" id="toc-installing-and-loading-the-required-libraries" class="nav-link" data-scroll-target="#installing-and-loading-the-required-libraries"><strong>2.2.1 Installing and loading the required libraries</strong></a></li>
+  <li><a href="#installing-and-loading-the-required-libraries" id="toc-installing-and-loading-the-required-libraries" class="nav-link" data-scroll-target="#installing-and-loading-the-required-libraries">2.2.1 Installing and loading the required libraries</a></li>
   <li><a href="#importing-data" id="toc-importing-data" class="nav-link" data-scroll-target="#importing-data">2.2.2 Importing data</a></li>
   </ul></li>
   <li><a href="#beyond-ggplot2-annotation-ggrepel" id="toc-beyond-ggplot2-annotation-ggrepel" class="nav-link" data-scroll-target="#beyond-ggplot2-annotation-ggrepel"><strong>2.3 Beyond ggplot2 Annotation: ggrepel</strong></a>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#beyond-ggplot2-themes" id="toc-beyond-ggplot2-themes" class="nav-link" data-scroll-target="#beyond-ggplot2-themes"><strong>2.4 Beyond ggplot2 Themes</strong></a>
   <ul class="collapse">
   <li><a href="#working-with-ggtheme-package" id="toc-working-with-ggtheme-package" class="nav-link" data-scroll-target="#working-with-ggtheme-package"><strong>2.4.1 Working with ggtheme package</strong></a></li>
-  <li><a href="#working-with-hrbthems-package" id="toc-working-with-hrbthems-package" class="nav-link" data-scroll-target="#working-with-hrbthems-package"><strong>2.4.2 Working with hrbthems package</strong></a></li>
+  <li><a href="#working-with-hrbthems-package" id="toc-working-with-hrbthems-package" class="nav-link" data-scroll-target="#working-with-hrbthems-package">2.4.2 Working with hrbthems package</a></li>
   </ul></li>
   <li><a href="#beyond-single-graph" id="toc-beyond-single-graph" class="nav-link" data-scroll-target="#beyond-single-graph"><strong>2.5 Beyond Single Graph</strong></a>
   <ul class="collapse">
@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Handson_Ex02</h1>
+<h1 class="title">2 Beyond ggplot2 Fundamentals</h1>
 </div>
 
 
@@ -265,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">January 25, 2025</p>
+      <p class="date-modified">January 30, 2025</p>
     </div>
   </div>
     
@@ -276,8 +276,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="overview" class="level1">
-<h1><strong>2.1 Overview</strong></h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview"><strong>2.1 Overview</strong></h2>
 <p>In this chapter, you will be introduced to several ggplot2 extensions for creating more elegant and effective statistical graphics. By the end of this exercise, you will be able to:</p>
 <ul>
 <li><p>control the placement of annotation on a graph by using functions provided in ggrepel package,</p></li>
@@ -285,10 +285,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>plot composite figure by combining ggplot2 graphs by using patchwork package.</p></li>
 </ul>
 </section>
-<section id="getting-started" class="level1">
-<h1><strong>2.2 Getting started</strong></h1>
-<section id="installing-and-loading-the-required-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="installing-and-loading-the-required-libraries"><strong>2.2.1 Installing and loading the required libraries</strong></h2>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started"><strong>2.2 Getting started</strong></h2>
+<section id="installing-and-loading-the-required-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="installing-and-loading-the-required-libraries">2.2.1 Installing and loading the required libraries</h3>
 <p>In this exercise, beside tidyverse, four R packages will be used. They are:</p>
 <ul>
 <li><p>ggrepel: an R package provides geoms for ggplot2 to repel overlapping text labels.</p></li>
@@ -303,15 +303,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>               tidyverse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="importing-data" class="level2">
-<h2 class="anchored" data-anchor-id="importing-data">2.2.2 Importing data</h2>
+<section id="importing-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-data">2.2.2 Importing data</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Exam_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="beyond-ggplot2-annotation-ggrepel" class="level1">
-<h1><strong>2.3 Beyond ggplot2 Annotation: ggrepel</strong></h1>
+<section id="beyond-ggplot2-annotation-ggrepel" class="level2">
+<h2 class="anchored" data-anchor-id="beyond-ggplot2-annotation-ggrepel"><strong>2.3 Beyond ggplot2 Annotation: ggrepel</strong></h2>
 <p>One of the challenge in plotting statistical graph is annotation, especially with large number of data points.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -335,8 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We simply replace <code>geom_text()</code> by geom_text_repel() and <code>geom_label()</code> by geom_label_repel.</p>
-<section id="working-with-ggrepel" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-ggrepel">2.3.1 Working with ggrepel</h2>
+<section id="working-with-ggrepel" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-ggrepel">2.3.1 Working with ggrepel</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span> MATHS, </span>
@@ -359,8 +359,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="beyond-ggplot2-themes" class="level1">
-<h1><strong>2.4 Beyond ggplot2 Themes</strong></h1>
+<section id="beyond-ggplot2-themes" class="level2">
+<h2 class="anchored" data-anchor-id="beyond-ggplot2-themes"><strong>2.4 Beyond ggplot2 Themes</strong></h2>
 <p>ggplot2 comes with eight <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">built-in themes</a>, they are: <code>theme_gray()</code>, <code>theme_bw()</code>, <code>theme_classic()</code>, <code>theme_dark()</code>, <code>theme_light()</code>, <code>theme_linedraw()</code>, <code>theme_minimal()</code>, and <code>theme_void()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -380,8 +380,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Refer to this <a href="https://ggplot2.tidyverse.org/reference/index.html#themes">link</a> to learn more about ggplot2 <code>Themes</code></p>
-<section id="working-with-ggtheme-package" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-ggtheme-package"><strong>2.4.1 Working with ggtheme package</strong></h2>
+<section id="working-with-ggtheme-package" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-ggtheme-package"><strong>2.4.1 Working with ggtheme package</strong></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> MATHS)) <span class="sc">+</span></span>
@@ -400,8 +400,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="working-with-hrbthems-package" class="level2">
-<h2 class="anchored" data-anchor-id="working-with-hrbthems-package"><strong>2.4.2 Working with hrbthems package</strong></h2>
+<section id="working-with-hrbthems-package" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-hrbthems-package">2.4.2 Working with hrbthems package</h3>
 <p><a href="https://cran.r-project.org/web/packages/hrbrthemes/index.html"><strong>hrbrthemes</strong></a> package provides a base theme that focuses on typographic elements, including where various labels are placed as well as the fonts that are used.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -430,8 +430,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="beyond-single-graph" class="level1">
-<h1><strong>2.5 Beyond Single Graph</strong></h1>
+<section id="beyond-single-graph" class="level2">
+<h2 class="anchored" data-anchor-id="beyond-single-graph"><strong>2.5 Beyond Single Graph</strong></h2>
 <p>It is not unusual that multiple graphs are required to tell a compelling visual story.</p>
 <p>There are several ggplot2 extensions provide functions to compose figure with multiple graphs. In this section, you will learn how to create composite plot by combining multiple graphs.</p>
 <p>First, let us create three statistical graphics by using the code chunk below.</p>
@@ -491,8 +491,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<section id="creating-composite-graphics-pathwork-methods" class="level2">
-<h2 class="anchored" data-anchor-id="creating-composite-graphics-pathwork-methods">2.5.1 Creating Composite Graphics: pathwork methods</h2>
+<section id="creating-composite-graphics-pathwork-methods" class="level3">
+<h3 class="anchored" data-anchor-id="creating-composite-graphics-pathwork-methods">2.5.1 Creating Composite Graphics: pathwork methods</h3>
 <p>There are several ggplot2 extension’s functions support the needs to prepare composite figure by combining several graphs such as <a href="https://cran.r-project.org/web/packages/gridExtra/vignettes/arrangeGrob.html"><code>grid.arrange()</code></a> of <strong>gridExtra</strong> package and <a href="https://wilkelab.org/cowplot/reference/plot_grid.html"><code>plot_grid()</code></a> of <a href="https://wilkelab.org/cowplot/index.html"><strong>cowplot</strong></a> package. In this section, I am going to shared with you an ggplot2 extension called <a href="https://patchwork.data-imaginist.com/"><strong>patchwork</strong></a> which is specially designed for combining separate ggplot2 graphs into a single figure.</p>
 <p>Patchwork package has a very simple syntax where we can create layouts super easily. Here’s the general syntax that combines:</p>
 <ul>
@@ -501,8 +501,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Two-Row Layout using the Division Sign <code>/</code></p></li>
 </ul>
 </section>
-<section id="combining-two-ggplot2-graphs" class="level2">
-<h2 class="anchored" data-anchor-id="combining-two-ggplot2-graphs"><strong>2.5.2 Combining two ggplot2 graphs</strong></h2>
+<section id="combining-two-ggplot2-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="combining-two-ggplot2-graphs"><strong>2.5.2 Combining two ggplot2 graphs</strong></h3>
 <p>Figure in the tabset below shows a composite of two histograms created using patchwork. Note how simple the syntax used to create the plot!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -515,8 +515,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="combining-three-ggplot2-graphs" class="level2">
-<h2 class="anchored" data-anchor-id="combining-three-ggplot2-graphs">2.5.3 Combining three ggplot2 graphs</h2>
+<section id="combining-three-ggplot2-graphs" class="level3">
+<h3 class="anchored" data-anchor-id="combining-three-ggplot2-graphs">2.5.3 Combining three ggplot2 graphs</h3>
 <p>We can plot more complex composite by using appropriate operators. For example, the composite figure below is plotted by using:</p>
 <ul>
 <li><p>“/” operator to stack two ggplot2 graphs,</p></li>
@@ -535,8 +535,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>To learn more about, refer to <a href="https://patchwork.data-imaginist.com/articles/guides/assembly.html">Plot Assembly</a>.</p>
 </section>
-<section id="creating-a-composite-figure-with-tag" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-composite-figure-with-tag">2.5.4 Creating a composite figure with tag</h2>
+<section id="creating-a-composite-figure-with-tag" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-composite-figure-with-tag">2.5.4 Creating a composite figure with tag</h3>
 <p>In order to identify subplots in text, patchwork also provides auto-tagging capabilities as shown in the figure below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>((p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3) <span class="sc">+</span> </span>
@@ -550,8 +550,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="creating-figure-with-insert" class="level2">
-<h2 class="anchored" data-anchor-id="creating-figure-with-insert">2.5.5 Creating figure with insert</h2>
+<section id="creating-figure-with-insert" class="level3">
+<h3 class="anchored" data-anchor-id="creating-figure-with-insert">2.5.5 Creating figure with insert</h3>
 <p>Beside providing functions to place plots next to each other based on the provided layout. With <a href="https://patchwork.data-imaginist.com/reference/inset_element.html"><code>inset_element()</code></a> of <strong>patchwork</strong>, we can place one or several plots or graphic elements freely on top or below another plot.</p>
 <p>We can adjust the position of adhere small chart.</p>
 <div class="cell">
@@ -569,8 +569,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="creating-a-composite-figure-by-using-patchwork-and-ggtheme" class="level2">
-<h2 class="anchored" data-anchor-id="creating-a-composite-figure-by-using-patchwork-and-ggtheme">2.5.6 Creating a composite figure by using patchwork and ggtheme</h2>
+<section id="creating-a-composite-figure-by-using-patchwork-and-ggtheme" class="level3">
+<h3 class="anchored" data-anchor-id="creating-a-composite-figure-by-using-patchwork-and-ggtheme">2.5.6 Creating a composite figure by using patchwork and ggtheme</h3>
 <p>Figure below is created by combining patchwork and theme_economist() of ggthemes package discussed earlier.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>patchwork <span class="ot">&lt;-</span> (p1 <span class="sc">/</span> p2) <span class="sc">|</span> p3</span>
@@ -585,8 +585,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="reference" class="level1">
-<h1><strong>2.6 Reference</strong></h1>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference"><strong>2.6 Reference</strong></h2>
 <ul>
 <li><p><a href="https://www.littlemissdata.com/blog/patchwork">Patchwork R package goes nerd viral</a></p></li>
 <li><p><a href="https://ggrepel.slowkow.com/">ggrepel</a></p></li>

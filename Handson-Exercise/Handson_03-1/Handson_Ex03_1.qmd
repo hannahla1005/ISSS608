@@ -1,5 +1,5 @@
 ---
-title: "Handson_Ex03_1:4  Programming Animated Statistical Graphics with R"
+title: "4  Programming Animated Statistical Graphics with R"
 author: "TzuTing Huang, (Hannah)"
 date-modified: "last-modified"
 ---
