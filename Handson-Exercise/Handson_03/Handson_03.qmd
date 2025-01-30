@@ -1,3 +1,8 @@
+---
+title: "Handson_Ex03_1:3  Programming Interactive Data Visualisation with R"
+author: "TzuTing, Huang"
+---
+
 # **3.1 Learning Outcome**
 
 In this hands-on exercise, you will learn how to create interactive data visualisation by using functions provided by **ggiraph** and **plotlyr** packages.
@@ -305,7 +310,7 @@ In order to build a coordinated multiple views as shown in the example above, th
 
 Plotly’s R graphing library create interactive web graphics from **ggplot2** graphs and/or a custom interface to the (MIT-licensed) JavaScript library [**plotly.js**](https://plotly.com/javascript/) inspired by the grammar of graphics. Different from other plotly platform, plot.R is free and open source.
 
-![](images/Screenshot 2025-01-29 at 9.50.55 PM.png)
+![](images/Screenshot%202025-01-29%20at%209.50.55%20PM.png)
 
 There are two ways to create interactive graph by using plotly, they are:
 
