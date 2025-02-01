@@ -1,0 +1,31 @@
+---
+title: "Inclass_Ex03"
+---
+
+### Filter
+
+Order date \>\> (drag into) \>\> Filter
+
+To see the trend for different years, months, or dates, you can always use the Filter to check the plot.
+
+![](images/Screenshot 2025-02-01 at 1.15.28 PM.png)
+
+### UI/UX of Filter
+
+![](images/Screenshot 2025-02-01 at 1.35.03 PM.png){width="307"}
+
+### Animations
+
+You can always adjust the duration (based on sec) of animation, you can also changed the animation by sequentially or spontaneously etc.
+
+### ToolTip
+
+![](images/Screenshot 2025-02-01 at 1.16.53 PM.png){width="378"}
+
+we can customize the content and insert in the sheet into Tooltip:
+
+![](images/Screenshot 2025-02-01 at 1.40.30 PM.png){width="378"}
+
+select
+
+![![](images/Screenshot 2025-02-01 at 1.25.29 PM.png){width="295"}](images/Screenshot 2025-02-01 at 1.24.17 PM.png){width="270"}
