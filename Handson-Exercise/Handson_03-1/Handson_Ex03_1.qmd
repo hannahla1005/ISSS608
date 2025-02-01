@@ -2,6 +2,8 @@
 title: "4  Programming Animated Statistical Graphics with R"
 author: "TzuTing Huang, (Hannah)"
 date-modified: "last-modified"
+execute:
+  warning: false
 ---
 
 ## **4.1 Overview**
@@ -192,6 +194,27 @@ gg <- ggplot(globalPop,
   theme(legend.position='none')
 
 ggplotly(gg)
+```
+
+### **4.4.2 Building an animated bubble plot: `plot_ly()` method**
+
+In this sub-section, you will learn how to create an animated bubble plot by using `plot_ly()` method.
+
+```{r}
+bp <- globalPop %>%
+  plot_ly(x = ~Old, 
+          y = ~Young, 
+          size = ~Population, 
+          color = ~Continent,
+          sizes = c(2, 100),
+          frame = ~Year, 
+          text = ~Country, 
+          hoverinfo = "text",
+          type = 'scatter',
+          mode = 'markers'
+          ) %>%
+  layout(showlegend = FALSE)
+bp
 ```
 
 ## **4.5 Reference**

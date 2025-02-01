@@ -3,6 +3,8 @@ title: "In Class Ex02"
 author: "TzuTing Huang, (Hannah)"
 ---
 
+### set X-axis and Y-axis
+
 ![](images/Screenshot 2025-02-01 at 12.54.57 PM.png)
 
 ![](images/Screenshot 2025-02-01 at 12.51.09 PM.png)
