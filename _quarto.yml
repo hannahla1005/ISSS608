@@ -19,6 +19,12 @@ website:
         href: Handson-Exercise/Handson_03-1/Handson_Ex03_1.html
       - text: "Hands-on Exercise 4"
         href: Handson-Exercise/Handson_04/Handson_Ex04.html
+      - text: "Hands-on Exercise 4-1"
+        href: Handson-Exercise/Handson_04-1/Handson_Ex04_1.html
+      - text: "Hands-on Exercise 4-2"
+        href: Handson-Exercise/Handson_04-2/Handson_Ex04_2.html
+      - text: "Hands-on Exercise 4-3"
+        href: Handson-Exercise/Handson_04-3/Handson_Ex04_3.html
       - text: "Hands-on Exercise 5"
         href: Handson-Exercise/Handson_05/Handson_Ex05.html
     - text: "In-Class Exercise"
@@ -32,7 +38,7 @@ website:
     - text: "Take home Exercise"
       menu:
       - text: "Take home Exercise 1"
-        href: Take-Home/Take-Home/TakeHome_Ex01.html
+        href: Take-Home/TakeHome_Ex01/TakeHome_Ex01.html
     right:
       - href: index.qmd
         text: Home

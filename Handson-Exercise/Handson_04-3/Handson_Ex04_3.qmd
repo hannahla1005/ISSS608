@@ -1,0 +1,32 @@
+---
+title: "12  Funnel Plots for Fair Comparisons"
+author: "TzuTing Huang, (Hannah)"
+date: "February 1, 2025"
+date-modified: "last-modified"
+execute:
+  warning: false
+---
+
+## **12.1 Overview**
+
+-   plotting funnel plots by using **funnelPlotR** package,
+
+-   plotting static funnel plot by using ggplot2 package, and
+
+-   plotting interactive funnel plot by using both **plotly R** and **ggplot2** packages.
+
+## **12.2 Installing and Launching R Packages**
+
+-   **readr** for importing csv into R.
+
+-   **FunnelPlotR** for creating funnel plot.
+
+-   **ggplot2** for creating funnel plot manually.
+
+-   **knitr** for building static html table.
+
+-   **plotly** for creating interactive funnel plot.
+
+```{R}
+pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
+```
