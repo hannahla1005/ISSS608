@@ -30,3 +30,61 @@ execute:
 ```{R}
 pacman::p_load(tidyverse, FunnelPlotR, plotly, knitr)
 ```
+
+The code chunk below imports the data into R and save it into a tibble data frame object called *covid19*.
+
+```{R}
+covid19 <- read_csv("data/COVID-19_DKI_Jakarta.csv") %>%
+  mutate_if(is.character, as.factor)
+```
+
+## **12.4 FunnelPlotR methods**
+
+### **12.4.1 FunnelPlotR methods: The basic plot**
+
+The code chunk below plots a funnel plot.
+
+```{R}
+funnel_plot(
+  .data = covid19,
+  numerator = Positive,
+  denominator = Death,
+  group = `Sub-district`
+)
+```
+
+### **12.4.2 FunnelPlotR methods: Makeover 1**
+
+The code chunk below plots a funnel plot.
+
+```{R}
+funnel_plot(
+  .data = covid19,
+  numerator = Death,
+  denominator = Positive,
+  group = `Sub-district`,
+  data_type = "PR",     #<<
+  x_range = c(0, 6500),  #<<
+  y_range = c(0, 0.05)   #<<
+)
+```
+
+### **12.4.3 FunnelPlotR methods: Makeover 2**
+
+The code chunk below plots a funnel plot.
+
+```{R}
+funnel_plot(
+  .data = covid19,
+  numerator = Death,
+  denominator = Positive,
+  group = `Sub-district`,
+  data_type = "PR",   
+  x_range = c(0, 6500),  
+  y_range = c(0, 0.05),
+  label = NA,
+  title = "Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases", #<<           
+  x_label = "Cumulative COVID-19 Positive Cases", #<<
+  y_label = "Cumulative Fatality Rate"  #<<
+)
+```

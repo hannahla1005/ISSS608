@@ -229,6 +229,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>12.1 Overview</strong></a></li>
   <li><a href="#installing-and-launching-r-packages" id="toc-installing-and-launching-r-packages" class="nav-link" data-scroll-target="#installing-and-launching-r-packages"><strong>12.2 Installing and Launching R Packages</strong></a></li>
+  <li><a href="#funnelplotr-methods" id="toc-funnelplotr-methods" class="nav-link" data-scroll-target="#funnelplotr-methods"><strong>12.4 FunnelPlotR methods</strong></a>
+  <ul class="collapse">
+  <li><a href="#funnelplotr-methods-the-basic-plot" id="toc-funnelplotr-methods-the-basic-plot" class="nav-link" data-scroll-target="#funnelplotr-methods-the-basic-plot"><strong>12.4.1 FunnelPlotR methods: The basic plot</strong></a></li>
+  <li><a href="#funnelplotr-methods-makeover-1" id="toc-funnelplotr-methods-makeover-1" class="nav-link" data-scroll-target="#funnelplotr-methods-makeover-1"><strong>12.4.2 FunnelPlotR methods: Makeover 1</strong></a></li>
+  <li><a href="#funnelplotr-methods-makeover-2" id="toc-funnelplotr-methods-makeover-2" class="nav-link" data-scroll-target="#funnelplotr-methods-makeover-2"><strong>12.4.3 FunnelPlotR methods: Makeover 2</strong></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -261,7 +267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 5, 2025</p>
+      <p class="date-modified">February 8, 2025</p>
     </div>
   </div>
     
@@ -291,14 +297,96 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, FunnelPlotR, plotly, knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The code chunk below imports the data into R and save it into a tibble data frame object called <em>covid19</em>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>covid19 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/COVID-19_DKI_Jakarta.csv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="funnelplotr-methods" class="level2">
+<h2 class="anchored" data-anchor-id="funnelplotr-methods"><strong>12.4 FunnelPlotR methods</strong></h2>
+<section id="funnelplotr-methods-the-basic-plot" class="level3">
+<h3 class="anchored" data-anchor-id="funnelplotr-methods-the-basic-plot"><strong>12.4.1 FunnelPlotR methods: The basic plot</strong></h3>
+<p>The code chunk below plots a funnel plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel_plot</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">.data =</span> covid19,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">numerator =</span> Positive,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">denominator =</span> Death,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">`</span><span class="at">Sub-district</span><span class="st">`</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Handson_Ex04_3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-The downloaded binary packages are in
-    /var/folders/55/lyktl8393wb30xkkgk37rkg80000gn/T//RtmpCqOZbq/downloaded_packages</code></pre>
+<pre><code>A funnel plot object with 267 points of which 0 are outliers. 
+Plot is adjusted for overdispersion. </code></pre>
+</div>
+</div>
+</section>
+<section id="funnelplotr-methods-makeover-1" class="level3">
+<h3 class="anchored" data-anchor-id="funnelplotr-methods-makeover-1"><strong>12.4.2 FunnelPlotR methods: Makeover 1</strong></h3>
+<p>The code chunk below plots a funnel plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel_plot</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">.data =</span> covid19,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">numerator =</span> Death,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">denominator =</span> Positive,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">`</span><span class="at">Sub-district</span><span class="st">`</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"PR"</span>,     <span class="co">#&lt;&lt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6500</span>),  <span class="co">#&lt;&lt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>)   <span class="co">#&lt;&lt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Handson_Ex04_3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A funnel plot object with 267 points of which 7 are outliers. 
+Plot is adjusted for overdispersion. </code></pre>
+</div>
+</div>
+</section>
+<section id="funnelplotr-methods-makeover-2" class="level3">
+<h3 class="anchored" data-anchor-id="funnelplotr-methods-makeover-2"><strong>12.4.3 FunnelPlotR methods: Makeover 2</strong></h3>
+<p>The code chunk below plots a funnel plot.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">funnel_plot</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">.data =</span> covid19,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">numerator =</span> Death,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">denominator =</span> Positive,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="st">`</span><span class="at">Sub-district</span><span class="st">`</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_type =</span> <span class="st">"PR"</span>,   </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6500</span>),  </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> <span class="cn">NA</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases"</span>, <span class="co">#&lt;&lt;           </span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_label =</span> <span class="st">"Cumulative COVID-19 Positive Cases"</span>, <span class="co">#&lt;&lt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_label =</span> <span class="st">"Cumulative Fatality Rate"</span>  <span class="co">#&lt;&lt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Handson_Ex04_3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A funnel plot object with 267 points of which 7 are outliers. 
+Plot is adjusted for overdispersion. </code></pre>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
