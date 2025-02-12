@@ -81,7 +81,7 @@ funnel_plot(
   group = `Sub-district`,
   data_type = "PR",   
   x_range = c(0, 6500),  
-  y_range = c(0, 0.05),
+  yrange = c(0, 0.05),
   label = NA,
   title = "Cumulative COVID-19 Fatality Rate by Cumulative Total Number of COVID-19 Positive Cases", #<<           
   x_label = "Cumulative COVID-19 Positive Cases", #<<
