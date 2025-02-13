@@ -733,5 +733,54 @@
     "title": "6 Visual Correlation Analysis",
     "section": "7.1 R packages",
     "text": "7.1 R packages\n\nggcormat() of ggstatsplot package\nggscatmat and ggpairs of GGally.\ncorrplot. A graphical display of a correlation matrix or general matrix. It also contains some algorithms to do matrix reordering. In addition, corrplot is good at details, including choosing color, text labels, color labels, layout, etc.\ncorrgram calculates correlation of variables and displays the results graphically. Included panel functions can display points, shading, ellipses, and correlation values with confidence intervals."
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "",
+    "text": "Parallel coordinates plot is a data visualisation specially designed for visualising and analysing multivariate, numerical data.\n\nplotting statistic parallel coordinates plots by using ggparcoord() of GGally package,\nplotting interactive parallel coordinates plots by using parcoords package, and\nplotting interactive parallel coordinates plots by using parallelPlot package."
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#overview",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#overview",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "",
+    "text": "Parallel coordinates plot is a data visualisation specially designed for visualising and analysing multivariate, numerical data.\n\nplotting statistic parallel coordinates plots by using ggparcoord() of GGally package,\nplotting interactive parallel coordinates plots by using parcoords package, and\nplotting interactive parallel coordinates plots by using parallelPlot package."
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#installing-and-launching-r-packages",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#installing-and-launching-r-packages",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "15.2 Installing and Launching R Packages",
+    "text": "15.2 Installing and Launching R Packages\nThe GGally, parcoords, parallelPlot and tidyverse packages will be used.\nThe code chunks below are used to install and load the packages in R.\n\npacman::p_load(GGally, parallelPlot, tidyverse)"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#data-preparation",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#data-preparation",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "15.3 Data Preparation",
+    "text": "15.3 Data Preparation\n\nwh &lt;- read_csv(\"data/WHData-2018.csv\")"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#plotting-static-parallel-coordinates-plot",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#plotting-static-parallel-coordinates-plot",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "15.4 Plotting Static Parallel Coordinates Plot",
+    "text": "15.4 Plotting Static Parallel Coordinates Plot\nLet’s learn how to plot static parallel coordinates plot by using ggparcoord() of GGally package.\n\n15.4.1 Plotting a simple parallel coordinates\nCode chunk below shows a typical syntax used to plot a basic static parallel coordinates plot by using ggparcoord().\n\nggparcoord(data = wh, \n           columns = c(7:12))\n\n\n\n\n\n\n\n\nNotice that only two argument namely data and columns is used.\nData argument is used to map the data object (i.e. wh) and columns is used to select the columns for preparing the parallel coordinates plot.\n\n\n15.4.2 Plotting a parallel coordinates with boxplot\nThe basic parallel coordinates failed to reveal any meaning understanding of the World Happiness measures. Let’s learn how to makeover the plot by using a collection of arguments provided by ggparcoord().\n\nggparcoord(data = wh, \n           columns = c(7:12), \n           groupColumn = 2,\n           scale = \"uniminmax\",\n           alphaLines = 0.2,\n           boxplot = TRUE, \n           title = \"Parallel Coordinates Plot of World Happines Variables\")\n\n\n\n\n\n\n\n\nThings to learn from the code chunk above.\n\ngroupColumn argument is used to group the observations (i.e. parallel lines) by using a single variable (i.e. Region) and colour the parallel coordinates lines by region name.\nscale argument is used to scale the variables in the parallel coordinate plot by using uniminmax method. The method univariately scale each variable so the minimum of the variable is zero and the maximum is one.\nalphaLines argument is used to reduce the intensity of the line colour to 0.2. The permissible value range is between 0 to 1.\nboxplot argument is used to turn on the boxplot by using logical TRUE. The default is FALSE.\ntitle argument is used to provide the parallel coordinates plot a title.\n\n\n\n15.4.3 Parallel coordinates with facet\nSince ggparcoord() is developed by extending ggplot2 package, we can combination use some of the ggplot2 function when plotting a parallel coordinates plot.\nIn the code chunk below, facet_wrap() of ggplot2 is used to plot 10 small multiple parallel coordinates plots. Each plot represent one geographical region such as East Asia.\n\nggparcoord(data = wh, \n           columns = c(7:12), \n           groupColumn = 2,\n           scale = \"uniminmax\",\n           alphaLines = 0.2,\n           boxplot = TRUE, \n           title = \"Multiple Parallel Coordinates Plots of World Happines Variables by Region\") +\n  facet_wrap(~ Region)\n\n\n\n\n\n\n\n\n\n\n15.4.4 Rotating x-axis text label\nTo make the x-axis text label easy to read, let us rotate the labels by 30 degrees. We can rotate axis text labels using theme() function in ggplot2 as shown in the code chunk below\n\nggparcoord(data = wh, \n           columns = c(7:12), \n           groupColumn = 2,\n           scale = \"uniminmax\",\n           alphaLines = 0.2,\n           boxplot = TRUE, \n           title = \"Multiple Parallel Coordinates Plots of World Happines Variables by Region\") +\n  facet_wrap(~ Region) + \n  theme(axis.text.x = element_text(angle = 30))\n\n\n\n\n\n\n\n\n\n\n15.4.5 Adjusting the rotated x-axis text label\n\nggparcoord(data = wh, \n           columns = c(7:12), \n           groupColumn = 2,\n           scale = \"uniminmax\",\n           alphaLines = 0.2,\n           boxplot = TRUE, \n           title = \"Multiple Parallel Coordinates Plots of World Happines Variables by Region\") +\n  facet_wrap(~ Region) + \n  theme(axis.text.x = element_text(angle = 30, hjust=1))"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#plotting-interactive-parallel-coordinates-plot-parallelplot-methods",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#plotting-interactive-parallel-coordinates-plot-parallelplot-methods",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "15.5 Plotting Interactive Parallel Coordinates Plot: parallelPlot methods",
+    "text": "15.5 Plotting Interactive Parallel Coordinates Plot: parallelPlot methods\n\n15.5.1 The basic plot\nThe code chunk below plot an interactive parallel coordinates plot by using parallelPlot().\n\nwh &lt;- wh %&gt;%\n  select(\"Happiness score\", c(7:12))\nparallelPlot(wh,\n             width = 320,\n             height = 250)\n\n\n\n\n\n\n\n15.5.2 Rotate axis label\nIn the code chunk below, rotateTitle argument is used to avoid overlapping axis labels.\n\nparallelPlot(wh,\n             rotateTitle = TRUE)\n\n\n\n\n\n\n\n15.5.3 Changing the colour scheme\nWe can change the default blue colour scheme by using continousCS argument as shown in the code chunl below.\n\nparallelPlot(wh,\n             continuousCS = \"YlOrRd\",\n             rotateTitle = TRUE)\n\n\n\n\n\n\n\n15.5.4 Parallel coordinates plot with histogram\nIn the code chunk below, histoVisibility argument is used to plot histogram along the axis of each variables.\n\nhistoVisibility &lt;- rep(TRUE, ncol(wh))\nparallelPlot(wh,\n             rotateTitle = TRUE,\n             histoVisibility = histoVisibility)"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#references",
+    "href": "Handson-Exercise/Handson_05_3/Handson_Ex05_3.html#references",
+    "title": "15 Visual Multivariate Analysis with Parallel Coordinates Plot",
+    "section": "15.6 References",
+    "text": "15.6 References\n\nggparcoord() of GGally package\nparcoords user guide\nparallelPlot"
   }
 ]
