@@ -537,5 +537,40 @@
     "title": "Handson_Ex01",
     "section": "1.11.1 Working with theme",
     "text": "1.11.1 Working with theme\nThe code chunk below plot a horizontal bar chart using theme_gray().\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_gray()\n\n\n\n\n\n\n\n\nA horizontal bar chart plotted using theme_classic().\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_classic()\n\n\n\n\n\n\n\n\nA horizontal bar chart plotted using theme_minimal().\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme_minimal()"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05/Handson_Ex05.html",
+    "href": "Handson-Exercise/Handson_05/Handson_Ex05.html",
+    "title": "13 Creating Ternary Plot with R",
+    "section": "",
+    "text": "Ternary plots are a type of graph used to show the distribution and relationship of three-part compositional data. For example, they can represent the proportions of young, working-age, and elderly populations in a society, or the mix of sand, silt, and clay in soil. The plot is shaped like a triangle, with each side scaled from 0 to 1. Each corner represents one of the three components. A point on the plot is positioned in such a way that if you draw a perpendicular line from it to each side of the triangle, the intersections will indicate the values of the three components"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05/Handson_Ex05.html#overview",
+    "href": "Handson-Exercise/Handson_05/Handson_Ex05.html#overview",
+    "title": "13 Creating Ternary Plot with R",
+    "section": "",
+    "text": "Ternary plots are a type of graph used to show the distribution and relationship of three-part compositional data. For example, they can represent the proportions of young, working-age, and elderly populations in a society, or the mix of sand, silt, and clay in soil. The plot is shaped like a triangle, with each side scaled from 0 to 1. Each corner represents one of the three components. A point on the plot is positioned in such a way that if you draw a perpendicular line from it to each side of the triangle, the intersections will indicate the values of the three components"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05/Handson_Ex05.html#installing-and-launching-r-packages",
+    "href": "Handson-Exercise/Handson_05/Handson_Ex05.html#installing-and-launching-r-packages",
+    "title": "13 Creating Ternary Plot with R",
+    "section": "13.2 Installing and launching R packages",
+    "text": "13.2 Installing and launching R packages\ntwo main R packages will be used：\n\nggtern, a ggplot extension specially designed to plot ternary diagrams. The package will be used to plot static ternary plots.\nPlotly R, an R package for creating interactive web-based graphs via plotly’s JavaScript graphing library, plotly.js . The plotly R libary contains the ggplotly function, which will convert ggplot2 figures into a Plotly object.\n\n\npacman::p_load(plotly, ggtern, tidyverse)"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05/Handson_Ex05.html#data-preparation",
+    "href": "Handson-Exercise/Handson_05/Handson_Ex05.html#data-preparation",
+    "title": "13 Creating Ternary Plot with R",
+    "section": "13.3 Data Preparation",
+    "text": "13.3 Data Preparation\n\n#Reading the data into R environment\npop_data &lt;- read_csv(\"data/respopagsex2000to2018_tidy.csv\") \n\n\n#Deriving the young, economy active and old measures\nagpop_mutated &lt;- pop_data %&gt;%\n  mutate(`Year` = as.character(Year))%&gt;%\n  spread(AG, Population) %&gt;%\n  mutate(YOUNG = rowSums(.[4:8]))%&gt;%\n  mutate(ACTIVE = rowSums(.[9:16]))  %&gt;%\n  mutate(OLD = rowSums(.[17:21])) %&gt;%\n  mutate(TOTAL = rowSums(.[22:24])) %&gt;%\n  filter(Year == 2018)%&gt;%\n  filter(TOTAL &gt; 0)"
+  },
+  {
+    "objectID": "Handson-Exercise/Handson_05/Handson_Ex05.html#plotting-ternary-diagram-with-r",
+    "href": "Handson-Exercise/Handson_05/Handson_Ex05.html#plotting-ternary-diagram-with-r",
+    "title": "13 Creating Ternary Plot with R",
+    "section": "13.4 Plotting Ternary Diagram with R",
+    "text": "13.4 Plotting Ternary Diagram with R\n\n13.4.1 4.1 Plotting a static ternary diagram\nUse ggtern() function of ggtern package to create a simple ternary plot.\n\n#Building the static ternary plot\nggtern(data=agpop_mutated,aes(x=YOUNG,y=ACTIVE, z=OLD)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\n#Building the static ternary plot\nggtern(data=agpop_mutated, aes(x=YOUNG,y=ACTIVE, z=OLD)) +\n  geom_point() +\n  labs(title=\"Population structure, 2015\") +\n  theme_rgbw()\n\n\n\n\n\n\n\n\n\n\n13.4.2 Plotting an interative ternary diagram\nThe code below create an interactive ternary plot using plot_ly() function of Plotly R.\n\n# reusable function for creating annotation object\nlabel &lt;- function(txt) {\n  list(\n    text = txt, \n    x = 0.1, y = 1,\n    ax = 0, ay = 0,\n    xref = \"paper\", yref = \"paper\", \n    align = \"center\",\n    font = list(family = \"serif\", size = 15, color = \"white\"),\n    bgcolor = \"#7B7B7B\", bordercolor = \"black\", borderwidth = 2\n  )\n}\n\n# reusable function for axis formatting\naxis &lt;- function(txt) {\n  list(\n    title = txt, tickformat = \".0%\", tickfont = list(size = 10)\n  )\n}\n\nternaryAxes &lt;- list(\n  aaxis = axis(\"Young\"), \n  baxis = axis(\"Active\"), \n  caxis = axis(\"Old\")\n)\n\n# Initiating a plotly visualization \nplot_ly(\n  agpop_mutated, \n  a = ~YOUNG, \n  b = ~ACTIVE, \n  c = ~OLD, \n  color = I(\"black\"), \n  type = \"scatterternary\"\n) %&gt;%\n  layout(\n    annotations = label(\"Ternary Markers\"), \n    ternary = ternaryAxes\n  )"
   }
 ]
