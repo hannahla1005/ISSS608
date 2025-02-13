@@ -27,6 +27,16 @@ website:
         href: Handson-Exercise/Handson_04-3/Handson_Ex04_3.html
       - text: "Hands-on Exercise 5"
         href: Handson-Exercise/Handson_05/Handson_Ex05.html
+      - text: "Hands-on Exercise 5-1"
+        href: Handson-Exercise/Handson_05-1/Handson_Ex05_1.html
+      - text: "Hands-on Exercise 5-2"
+        href: Handson-Exercise/Handson_05-2/Handson_Ex05_2.html
+      - text: "Hands-on Exercise 5-3"
+        href: Handson-Exercise/Handson_05-3/Handson_Ex05_3.html
+      - text: "Hands-on Exercise 5-4"
+        href: Handson-Exercise/Handson_05-4/Handson_Ex05_4.html
+      - text: "Hands-on Exercise 6"
+        href: Handson-Exercise/Handson_06/Handson_Ex06.html
     - text: "In-Class Exercise"
       menu:
       - text: "In-class Exercise 1"
