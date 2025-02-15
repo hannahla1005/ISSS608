@@ -1,0 +1,102 @@
+---
+title: "In-class_Ex05"
+format: html
+editor: visual
+---
+
+## Getting Started
+
+```{R}
+pacman::p_load(tidyverse, readxl, SmartEDA, easylabel, gtsummary, performance, parameters,ggstatsplot )
+```
+
+## Import Data
+
+```{R}
+car_resale <- read_xls("data/ToyotaCorolla.xls","data")
+```
+
+```{R}
+summary(car_resale)
+```
+
+```{R}
+car_resale %>%
+  ExpData(type = 1)
+```
+
+```{R}
+car_resale %>%
+  ExpData(type = 2)
+```
+
+```{R}
+cols <- c("Mfg_Month", "HP_Bin", "CC_bin", "Doors", "Gears", "Cylinders", "Fuel_Type", "Color", "ABS", "Airbag_1",
+          "Met_Color", "Automatic", "Mfr_Guarantee", "BOVAG_Guarantee", "CD_Player", "Airbag_2", "Airco", "Automatic_airco", 
+          "Boardcomputer", "Mistlamps", "Central_Lock", "Powered_Windows", "Power_Steering", "Radio",
+          "Sport_Model", "Backseat_Divider", "Metallic_Rim", "Radio_cassette", "Tow_Bar")
+car resale <- read_xls ("data/toyotacorolla.xls",
+                        sheet =”data")
+estate(td - as. character (1d) 15%
+sutate each (funs (factor(.)), cols)
+```
+
+```{R}
+car_resale %>%
+  ExpNumViz(target=NULL,
+            nlim=10,
+            Page=c(2,2))
+```
+
+```{R}
+car_resale %>%
+  ExpNumViz(target= "Price",
+            nlim= 10,
+            Page= c(2,2))
+```
+
+```{R}
+#| fig-width: 12
+#| fig-height: 10
+car_resale %>%
+  ExpCatViz(target=NULL,
+            col ="sky blue",
+            clim=10,
+            margin=2,
+            Page = c (4,4),
+            sample=16)
+```
+
+```{R}
+model <- lm (Price ~ Age_08_04 + Mfg_Year + KM +Weight + Guarantee_Period, data=car_resale)
+model
+```
+
+```{R}
+check_collinearity(model)
+```
+
+```{R}
+check_c <- check_collinearity(model)
+plot(check_c)
+```
+
+```{R}
+modell <- lm(Price ~ Age_08_04 + KM + Weight + Guarantee_Period, data=car_resale)
+check_normality(model)
+```
+
+```{R}
+p_modell <- parameters(model)
+```
+
+```{R}
+plot(parameters(model))
+```
+
+```{R}
+ggcoefstats(modell,
+            output = "plot")
+```
+
+![](images/Screenshot 2025-02-15 at 3.45.50 PM.png)

@@ -4,3 +4,170 @@ author: "TzuTing Huang, (Hannah)"
 date: "February 1, 2025"
 date-modified: "last-modified"
 ---
+
+## **1.1 Problem Statement**
+
+## **1.2 Getting Started**
+
+```{R}
+
+pacman::p_load(ggiraph, ggdist, ggridges, ggthemes,
+               colorspace, tidyverse, corrplot,reshape2)
+```
+
+```{R}
+data <- read.csv("/Users/hannahla/Desktop/SMU/SMU_MITB_T2/ISSS608_Visual Analytics and Applications/Gihub_hannahla/ISSS608/Take-Home/TakeHome_Ex01/data/Ship_Performance_Dataset.csv")
+
+```
+
+```{R}
+data$Date <- as.Date(data$Date, format="%Y-%m-%d")
+
+```
+
+```{}
+```
+
+```{R}
+data %>%
+  ExpData(type = 2)
+```
+
+```{R}
+colSums(is.na(data))
+
+```
+
+```{R}
+table(data$Ship_Type)
+```
+
+## 1.3 Exploratory Data Analysis (EDA)
+
+SmartED
+
+z
+
+### 1.3.1 Distribution of Fuel Efficiency
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+{R}
+
+p1 \<- ggplot(data, aes(x = Efficiency_nm_per_kWh)) +
+
+geom_histogram(bins=20,
+
+boundary = max(data\$Efficiency_nm_per_kWh),
+
+color="grey25",
+
+fill="purple") +
+
+ggtitle("Distribution of Fuel Efficiency (nm per kWh)")
+
+print(p1)
+
+ 
+
+ 
+
+הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAEA0lEQVR4XqVWfWwTZRzuhgJqFJGAgga77dZr73p3vd7csoxowThkEowEJCAQIEMicQnfX1ERjUz/wGgUyALb5EOTAWMgARJhgCwlbGxgxja7NbjOLaPQZWvZ1m1+oO9Td83tly6j8iRP1r33+7rf+77P70ymBwTHZTzFiaqQIirTeVGeYVUUi2n+/FHU7qGBJI2N3rO94XBPuK+v333lSkGSTX2R2sWFJLv9WY7jxkQXWOWvvTFnDksw0D8w8A8Y6OhoShXkDIObaYqmPc7+JBjXYkKW5SesipZdevLkp7mr8xYm2xypbDkhRZYnHTt+YoeeBOzr7//LlZ0zG0XAzyJp1q0ffLRcSc+cabNpk2nsIUi1O231Hk8ZArEW9V6sqPjWrmVkWwRlWnNLy2VjIrCgsHA99irnrXlv3mxoKGPJ//YHAnWr16x/B8XR+BEka9q4r7/Zk0eDdXR2+oKh0G26Dvb09gZr6+qPhLq7O4zrbe3tNZwsO2kOHQlpWVmzhgsaD2/7/bW8XU2jCaKwOhzmc+UXvqSO8ZC1789P8r941yy89ByNb4T+Vn4a4EH5S+3NEl6WeRo4CrPZNTZZ0KY6M6e93hUMttEAYGdX8Pcm762f2B5UoXL6HNxf9N0GTlUnvpCZ+ZggCKNN+nGfKknjebtTfn/dhsU/V7h3o7/UmfE+nuHoc4IiYqPRntC9e3epbWtbW9WOnTtXrtu4beniFSvfRuFQFROS/ObzXaIORkIRoAzR6hhYe5KKDxzaTG0pG73eMxFfi6y+CkmhBkYWH/p+s9WaPkFPogNvyHzD1N5Idh/D0EcTBHIk490FBWvNDsfTNBEnqa909/R0UXsj2/3+GymSUzNBZkpKS7ffavZdgGBSQ7CquqY4RXRyxiQ8r075fNeu96itThQANdm7v2gttPO/ytgpsUqSlJY1Y9b58otfUSdWQDc2GMcWOob9gcjeCQQ81La52Ve+/bP8XLQV+y+K4jPGAnUkwiDWm2Ef6xoajp86fTb/auW1wq5QqJ3agEtzVy2I1eYhwD0qOnhwE3WOhxu3fbgs1sGJwuVyPZL18vQcdllbqXM8bGltdVtEVaHxo4DOuSsr91HH/8Piwz9sGfat0LbLFe49RgfsS3XNjcO/ejw/st9/0IDYp8amptP0GdYGL3hMJGLIQRTZ9b2PFmCAYbBBcjBjjMHYKPdG5IUFxIlkc8sbSc5aD+nhef5JmiAKCCFG8qq8NQvRZ/31UyUp+Vr19QPGRGzgHY18CTFYFOV5XA0oCNQf3RkaeRhAyY3/4y5QXSspLfuYjOvEwcJG/jgZFoNfQVB27Ae7qPXzFi2Zq2nao9T0oYGJifEMEWYfK+kjfukQ/AsQrybRGPJ2TQAAAABJRU5ErkJggg== "Modify Chunk Options")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABH0lEQVR4XmNgGAVDCqxdvzVhzcbNm6mBK6uqVqObDwf///9nXLt+SzG6JlJxTW3tVpBZ6OajgP3797Os3bClFV0zsbiuoXEfyAx0c7GCRTt3cq9Zv7UX3RBCuL6x8TBIL7p5eMGqVbv512zYMgvdMFy4san1FEgPujlEgbVrd0gCg3EJuqHouLm59TxILbp+ksCqjdvV12zcshLdcBhuamm7BFKDro8ssGbjRr01G7aux7Ckte0qSA5dPUVg9frNDkDLNsGDq7X9GkgMXR1VwNoNm0MgPmm/DmKjy49wwLjIbzM1MLq5GIBxgc9mhm2eFGGwGYQA42wvDI2kYrAZhADjdEyNpGKwGYQA42Q3DI2kYrAZBEGfy2aq4FEw5AAASl8F3R9fQqAAAAAASUVORK5CYII= "Run All Chunks Above")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAaCAYAAADFTB7LAAAAcElEQVR4Xu3OwQmAQAxE0bClWYCW5N06tM6V2YPg5CjoF/JhLoHAi6iqn9eOefUbqrYvHY0cQDLyAlKRNyARmYA0ZMLRkAlGQyaU72tkAtlim7r/vJqDUDjlKBROOQyFU2icQuMUGqfQuBEaV1XPOwEx96nYACK8+wAAAABJRU5ErkJggg== "Run Current Chunk")
+
+-   The majority of ships have a fuel efficiency between **0.5 and 1.5 nm/kWh**.
+
+-   There may be **outliers** (ships with exceptionally high or low efficiency), which require further investigation.
+
+### 1.3.2 Operational Cost Across Different Ship Types
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+{R}
+
+p2 \<- ggplot(data, aes(x = Operational_Cost_USD)) +
+
+geom_histogram(bins=20,
+
+color="grey25",
+
+fill="blue") +
+
+ggtitle("Distribution of Operational Cost (USD)")
+
+print(p2)
+
+ 
+
+ 
+
+הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAEA0lEQVR4XqVWfWwTZRzuhgJqFJGAgga77dZr73p3vd7csoxowThkEowEJCAQIEMicQnfX1ERjUz/wGgUyALb5EOTAWMgARJhgCwlbGxgxja7NbjOLaPQZWvZ1m1+oO9Td83tly6j8iRP1r33+7rf+77P70ymBwTHZTzFiaqQIirTeVGeYVUUi2n+/FHU7qGBJI2N3rO94XBPuK+v333lSkGSTX2R2sWFJLv9WY7jxkQXWOWvvTFnDksw0D8w8A8Y6OhoShXkDIObaYqmPc7+JBjXYkKW5SesipZdevLkp7mr8xYm2xypbDkhRZYnHTt+YoeeBOzr7//LlZ0zG0XAzyJp1q0ffLRcSc+cabNpk2nsIUi1O231Hk8ZArEW9V6sqPjWrmVkWwRlWnNLy2VjIrCgsHA99irnrXlv3mxoKGPJ//YHAnWr16x/B8XR+BEka9q4r7/Zk0eDdXR2+oKh0G26Dvb09gZr6+qPhLq7O4zrbe3tNZwsO2kOHQlpWVmzhgsaD2/7/bW8XU2jCaKwOhzmc+UXvqSO8ZC1789P8r941yy89ByNb4T+Vn4a4EH5S+3NEl6WeRo4CrPZNTZZ0KY6M6e93hUMttEAYGdX8Pcm762f2B5UoXL6HNxf9N0GTlUnvpCZ+ZggCKNN+nGfKknjebtTfn/dhsU/V7h3o7/UmfE+nuHoc4IiYqPRntC9e3epbWtbW9WOnTtXrtu4beniFSvfRuFQFROS/ObzXaIORkIRoAzR6hhYe5KKDxzaTG0pG73eMxFfi6y+CkmhBkYWH/p+s9WaPkFPogNvyHzD1N5Idh/D0EcTBHIk490FBWvNDsfTNBEnqa909/R0UXsj2/3+GymSUzNBZkpKS7ffavZdgGBSQ7CquqY4RXRyxiQ8r075fNeu96itThQANdm7v2gttPO/ytgpsUqSlJY1Y9b58otfUSdWQDc2GMcWOob9gcjeCQQ81La52Ve+/bP8XLQV+y+K4jPGAnUkwiDWm2Ef6xoajp86fTb/auW1wq5QqJ3agEtzVy2I1eYhwD0qOnhwE3WOhxu3fbgs1sGJwuVyPZL18vQcdllbqXM8bGltdVtEVaHxo4DOuSsr91HH/8Piwz9sGfat0LbLFe49RgfsS3XNjcO/ejw/st9/0IDYp8amptP0GdYGL3hMJGLIQRTZ9b2PFmCAYbBBcjBjjMHYKPdG5IUFxIlkc8sbSc5aD+nhef5JmiAKCCFG8qq8NQvRZ/31UyUp+Vr19QPGRGzgHY18CTFYFOV5XA0oCNQf3RkaeRhAyY3/4y5QXSspLfuYjOvEwcJG/jgZFoNfQVB27Ae7qPXzFi2Zq2nao9T0oYGJifEMEWYfK+kjfukQ/AsQrybRGPJ2TQAAAABJRU5ErkJggg== "Modify Chunk Options")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABH0lEQVR4XmNgGAVDCqxdvzVhzcbNm6mBK6uqVqObDwf///9nXLt+SzG6JlJxTW3tVpBZ6OajgP3797Os3bClFV0zsbiuoXEfyAx0c7GCRTt3cq9Zv7UX3RBCuL6x8TBIL7p5eMGqVbv512zYMgvdMFy4san1FEgPujlEgbVrd0gCg3EJuqHouLm59TxILbp+ksCqjdvV12zcshLdcBhuamm7BFKDro8ssGbjRr01G7aux7Ckte0qSA5dPUVg9frNDkDLNsGDq7X9GkgMXR1VwNoNm0MgPmm/DmKjy49wwLjIbzM1MLq5GIBxgc9mhm2eFGGwGYQA42wvDI2kYrAZhADjdEyNpGKwGYQA42Q3DI2kYrAZBEGfy2aq4FEw5AAASl8F3R9fQqAAAAAASUVORK5CYII= "Run All Chunks Above")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAaCAYAAADFTB7LAAAAcElEQVR4Xu3OwQmAQAxE0bClWYCW5N06tM6V2YPg5CjoF/JhLoHAi6iqn9eOefUbqrYvHY0cQDLyAlKRNyARmYA0ZMLRkAlGQyaU72tkAtlim7r/vJqDUDjlKBROOQyFU2icQuMUGqfQuBEaV1XPOwEx96nYACK8+wAAAABJRU5ErkJggg== "Run Current Chunk")
+
+### 1.3.3 Boxplots of Operational Cost by Ship Type
+
+```{R}
+ggplot(data, aes(x=Ship_Type, y=Operational_Cost_USD, fill=Ship_Type)) +
+  geom_boxplot(alpha=0.7) +
+  theme_minimal() +
+  ggtitle("Operational Cost Distribution by Ship Type") +
+  theme(axis.text.x = element_text(angle=45, hjust=1))
+
+```
+
+```{R}
+ship_cor <- cor(data[, c("Speed_Over_Ground_knots", "Engine_Power_kW", "Distance_Traveled_nm", 
+                         "Draft_meters", "Cargo_Weight_tons", "Operational_Cost_USD", 
+                         "Revenue_per_Voyage_USD", "Turnaround_Time_hours","Efficiency_nm_per_kWh", 
+                         "Seasonal_Impact_Score", "Weekly_Voyage_Count", "Average_Load_Percentage")])
+
+corrplot(ship_cor)
+
+
+```
+
+```{R}
+ggplot(data, aes(x = Weather_Condition, 
+                 y = Efficiency_nm_per_kWh)) +
+  stat_halfeye(adjust = 0.5,
+               justification = -0.2,
+               .width = 0,
+               point_colour = NA) +
+  geom_boxplot(width = .20,
+               outlier.shape = NA)
+
+```
