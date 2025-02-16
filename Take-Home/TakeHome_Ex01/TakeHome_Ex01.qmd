@@ -3,29 +3,84 @@ title: "TakeHome_Ex01"
 author: "TzuTing Huang, (Hannah)"
 date: "February 1, 2025"
 date-modified: "last-modified"
+execute:
+  warning: false
 ---
 
-## **1.1 Problem Statement**
+## **1.1 Background**
 
-## **1.2 Getting Started**
+Shipping is one of the most important parts of global trade, moving goods across continents every single day. In fact, **more than 90% of world trade relies on maritime transport**. However, operating ships is not cheap—fuel is one of the biggest costs, and companies are always looking for ways to **improve efficiency and reduce expenses**.
+
+At the same time, there are other important challenges:
+
+-   **Rising fuel costs**—fuel is one of the biggest expenses for shipping companies.
+-   **Stricter environmental regulations**—reducing emissions is now a legal and business necessity.
+-   **Operational cost management**—companies need to balance cost and efficiency while maintaining profitability.
+
+By analyzing ship performance, we can figure out which factors affect fuel efficiency and operational cost. If we can find patterns in the data, shipping companies can optimize their routes, adjust their speeds, and reduce unnecessary costs.
+
+## **1.2 About the Dataset**
+
+In this section, the data *Ship_Performance_Dataset.csv* have be used is a structured collection of ship operational and performance data designed for clustering, predictive modeling, and optimization analysis in the maritime industry. It provides a realistic yet synthetic representation of various ship types operating in the Gulf of Guinea.
+
+The dataset comprises **2,736 records** with **18 key variables**, encompassing **numerical attributes** (*speed over ground, engine power, distance traveled, operational cost, revenue per voyage, efficiency, draft, turnaround time, seasonal impact score, weekly voyage count, and average load percentage*) and **categorical attributes** (*ship type, route type, engine type, maintenance status, and weather condition*).
+
+```{R}
+#| echo: FALSE
+
+# Load required libraries
+library(tidyverse)  # For data manipulation and visualization
+library(DT)         # For interactive data tables
+
+# Load the dataset
+data <- read.csv("/Users/hannahla/Desktop/SMU/SMU_MITB_T2/ISSS608_Visual Analytics and Applications/Gihub_hannahla/ISSS608/Take-Home/TakeHome_Ex01/data/Ship_Performance_Dataset.csv")
+
+# Show dataset as an interactive table
+datatable(data, options = list(pageLength = 10, scrollX = TRUE))
+
+
+```
+
+## **1.3 Getting Started**
+
+First, write a code chunk to check, install and launch the following R packages:
+
+-   **ggiraph** – Enables interactive graphics with `ggplot2`.
+
+-   **plotly** – Creates interactive statistical graphs.
+
+-   **DT** – Provides an interface to the JavaScript DataTables library for creating interactive tables.
+
+-   **tidyverse** – A collection of packages designed for data science and visualization.
+
+-   **patchwork** – Helps combine multiple `ggplot2` plots into a single layout.
+
+The following R **code chunk** will check, install (if necessary), and load these packages:
 
 ```{R}
 
 pacman::p_load(ggiraph, ggdist, ggridges, ggthemes,
-               colorspace, tidyverse, corrplot,reshape2)
+               colorspace, tidyverse, corrplot, reshape2, dplyr, SmartEDA, ggplot2, treemap)
 ```
+
+### 1.3.1 Import Data
+
+In this section, *Ship_Performance_Dataset.csv* provided will be used. Using [*read_csv()*](https://readr.tidyverse.org/reference/read_delim.html) of **readr** package, import *Ship_Performance_Dataset.csv* into R.
+
+The code chunk below `read_csv()` of **readr** package is used to import *Ship_Performance_Dataset.csv* data file into R and save it as an tibble data frame called `data`.
 
 ```{R}
 data <- read.csv("/Users/hannahla/Desktop/SMU/SMU_MITB_T2/ISSS608_Visual Analytics and Applications/Gihub_hannahla/ISSS608/Take-Home/TakeHome_Ex01/data/Ship_Performance_Dataset.csv")
 
 ```
 
+### 1.3.2 **Check data**
+
+### **check data structure**
+
 ```{R}
-data$Date <- as.Date(data$Date, format="%Y-%m-%d")
-
-```
-
-```         
+data %>%
+  ExpData(type = 1)
 ```
 
 ```{R}
@@ -33,112 +88,104 @@ data %>%
   ExpData(type = 2)
 ```
 
+### **check Missing value**
+
 ```{R}
 colSums(is.na(data))
 
 ```
 
+### 1.3.3 Data Preparation
+
+Using the correct format **(`"%Y-%m-%d"`)** ensures accuracy in data conversion.
+
 ```{R}
-table(data$Ship_Type)
+data$Date <- as.Date(data$Date, format="%Y-%m-%d")
+
 ```
 
-## 1.3 Exploratory Data Analysis (EDA)
+## 1.5 Exploratory Data Analysis (EDA)
 
-SmartED
+### EDA 1: Distribution of Revenue per Voyage
 
-z
+This histogram represents the **distribution of revenue per voyage (`Revenue_per_Voyage_USD`)**, showing how many voyages fall within each revenue range. The revenue spans from **0 to approximately 1,000,000 USD**, with most voyages distributed fairly evenly across different revenue levels.
 
-### 1.3.1 Distribution of Fuel Efficiency
+Interestingly, the distribution does not exhibit strong skewness, meaning that **there are no extremely high or low concentration points**. However, there is a small number of voyages on the far right side of the histogram that have exceptionally high revenue. This suggests that a few voyages generate significantly higher income than the majority, potentially due to premium cargo, special routes, or high-value shipments.
 
-1
+```{R}
+ggplot(data, aes(x = Revenue_per_Voyage_USD)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  ggtitle("Revenue_per_Voyage")
 
-2
+```
 
-3
+### EDA 2: Operational Cost Distribution
 
-4
+This histogram represents the **distribution of operational costs (`Operational_Cost_USD`) across different voyages**, showing how frequently voyages fall into various cost ranges. The operational cost spans from **0 to approximately 500,000 USD**, with no extreme skewness or significant outliers.
 
-5
+Unlike revenue, which reached up to **1,000,000 USD**, operational costs are relatively lower in magnitude. The distribution appears **relatively uniform**, meaning that most voyages operate within a **similar cost range**, without a large concentration in any specific cost bracket.
 
-6
+```{R}
+ggplot(data, aes(x = Operational_Cost_USD)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  theme_minimal() +
+  ggtitle("Operational_Cost")
 
-7
+```
 
-8
+### EDA 3: Stacked Cost & Revenue by Route Type
 
-9
+This stacked bar chart compares **total operational cost (`Operational_Cost_USD`) and total revenue (`Revenue_per_Voyage_USD`) across different route types**. The bars are divided into two colors:
 
-{R}
+-   **Purple (lower section)** represents **operational cost**.
 
-p1 \<- ggplot(data, aes(x = Efficiency_nm_per_kWh)) +
+-   **Blue (upper section)** represents **revenue**.
 
-geom_histogram(bins=20,
+From this visualization, we can observe:
 
-boundary = max(data\$Efficiency_nm_per_kWh),
+-   **Long-haul and Transoceanic routes tend to generate higher revenues due to longer distances and larger cargo volumes**, but they also require **more fuel, maintenance, and port fees**, leading to higher costs.
 
-color="grey25",
+-   **Short-haul and Coastal routes have lower total revenues but also relatively lower operational costs**, which may result in more favorable profit margins depending on the pricing structure.
 
-fill="purple") +
+-   **The "None" category likely represents missing or misclassified data**, and its extremely low values should be investigated further.
 
-ggtitle("Distribution of Fuel Efficiency (nm per kWh)")
+```{R}
+cost_revenue_data <- data %>%
+  group_by(Route_Type) %>%
+  summarise(Total_Cost = sum(Operational_Cost_USD, na.rm = TRUE),
+            Total_Revenue = sum(Revenue_per_Voyage_USD, na.rm = TRUE))
 
-print(p1)
+```
 
- 
+```{R}
+ggplot(cost_revenue_data, aes(x = Route_Type)) +  
+  # 半透明紅色運營成本柱狀圖
+  geom_bar(aes(y = Total_Cost, fill = "Operational Cost"), 
+           stat = "identity", alpha = 0.9) +  # **調整透明度**
+  
+  # 半透明藍色收益柱狀圖
+  geom_bar(aes(y = Total_Revenue, fill = "Revenue"), 
+           stat = "identity", position = "stack", alpha = 0.5) +  # **同樣調整透明度**
 
- 
+  # 手動設置顏色
+  scale_fill_manual(values = c("Operational Cost" = "red", "Revenue" = "blue")) +
 
-הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה
+  # 圖表標題與格式
+  labs(title = "Stacked Cost & Revenue by Route Type", 
+       x = "Route Type", y = "Total USD") +
+  theme_minimal()
+```
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+### EDA 4: Operational Cost Distribution by Ship Type
 
-![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAEA0lEQVR4XqVWfWwTZRzuhgJqFJGAgga77dZr73p3vd7csoxowThkEowEJCAQIEMicQnfX1ERjUz/wGgUyALb5EOTAWMgARJhgCwlbGxgxja7NbjOLaPQZWvZ1m1+oO9Td83tly6j8iRP1r33+7rf+77P70ymBwTHZTzFiaqQIirTeVGeYVUUi2n+/FHU7qGBJI2N3rO94XBPuK+v333lSkGSTX2R2sWFJLv9WY7jxkQXWOWvvTFnDksw0D8w8A8Y6OhoShXkDIObaYqmPc7+JBjXYkKW5SesipZdevLkp7mr8xYm2xypbDkhRZYnHTt+YoeeBOzr7//LlZ0zG0XAzyJp1q0ffLRcSc+cabNpk2nsIUi1O231Hk8ZArEW9V6sqPjWrmVkWwRlWnNLy2VjIrCgsHA99irnrXlv3mxoKGPJ//YHAnWr16x/B8XR+BEka9q4r7/Zk0eDdXR2+oKh0G26Dvb09gZr6+qPhLq7O4zrbe3tNZwsO2kOHQlpWVmzhgsaD2/7/bW8XU2jCaKwOhzmc+UXvqSO8ZC1789P8r941yy89ByNb4T+Vn4a4EH5S+3NEl6WeRo4CrPZNTZZ0KY6M6e93hUMttEAYGdX8Pcm762f2B5UoXL6HNxf9N0GTlUnvpCZ+ZggCKNN+nGfKknjebtTfn/dhsU/V7h3o7/UmfE+nuHoc4IiYqPRntC9e3epbWtbW9WOnTtXrtu4beniFSvfRuFQFROS/ObzXaIORkIRoAzR6hhYe5KKDxzaTG0pG73eMxFfi6y+CkmhBkYWH/p+s9WaPkFPogNvyHzD1N5Idh/D0EcTBHIk490FBWvNDsfTNBEnqa909/R0UXsj2/3+GymSUzNBZkpKS7ffavZdgGBSQ7CquqY4RXRyxiQ8r075fNeu96itThQANdm7v2gttPO/ytgpsUqSlJY1Y9b58otfUSdWQDc2GMcWOob9gcjeCQQ81La52Ve+/bP8XLQV+y+K4jPGAnUkwiDWm2Ef6xoajp86fTb/auW1wq5QqJ3agEtzVy2I1eYhwD0qOnhwE3WOhxu3fbgs1sGJwuVyPZL18vQcdllbqXM8bGltdVtEVaHxo4DOuSsr91HH/8Piwz9sGfat0LbLFe49RgfsS3XNjcO/ejw/st9/0IDYp8amptP0GdYGL3hMJGLIQRTZ9b2PFmCAYbBBcjBjjMHYKPdG5IUFxIlkc8sbSc5aD+nhef5JmiAKCCFG8qq8NQvRZ/31UyUp+Vr19QPGRGzgHY18CTFYFOV5XA0oCNQf3RkaeRhAyY3/4y5QXSspLfuYjOvEwcJG/jgZFoNfQVB27Ae7qPXzFi2Zq2nao9T0oYGJifEMEWYfK+kjfukQ/AsQrybRGPJ2TQAAAABJRU5ErkJggg== "Modify Chunk Options")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABH0lEQVR4XmNgGAVDCqxdvzVhzcbNm6mBK6uqVqObDwf///9nXLt+SzG6JlJxTW3tVpBZ6OajgP3797Os3bClFV0zsbiuoXEfyAx0c7GCRTt3cq9Zv7UX3RBCuL6x8TBIL7p5eMGqVbv512zYMgvdMFy4san1FEgPujlEgbVrd0gCg3EJuqHouLm59TxILbp+ksCqjdvV12zcshLdcBhuamm7BFKDro8ssGbjRr01G7aux7Ckte0qSA5dPUVg9frNDkDLNsGDq7X9GkgMXR1VwNoNm0MgPmm/DmKjy49wwLjIbzM1MLq5GIBxgc9mhm2eFGGwGYQA42wvDI2kYrAZhADjdEyNpGKwGYQA42Q3DI2kYrAZBEGfy2aq4FEw5AAASl8F3R9fQqAAAAAASUVORK5CYII= "Run All Chunks Above")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAaCAYAAADFTB7LAAAAcElEQVR4Xu3OwQmAQAxE0bClWYCW5N06tM6V2YPg5CjoF/JhLoHAi6iqn9eOefUbqrYvHY0cQDLyAlKRNyARmYA0ZMLRkAlGQyaU72tkAtlim7r/vJqDUDjlKBROOQyFU2icQuMUGqfQuBEaV1XPOwEx96nYACK8+wAAAABJRU5ErkJggg== "Run Current Chunk")
+-   **All ship types have a similar median operational cost**, but their distributions vary significantly.
 
--   The majority of ships have a fuel efficiency between **0.5 and 1.5 nm/kWh**.
+-   **Container Ships and Bulk Carriers have higher median costs**, likely due to their size and fuel consumption.
 
--   There may be **outliers** (ships with exceptionally high or low efficiency), which require further investigation.
+-   **Fish Carriers and Tankers show greater variability in costs**, indicating that some voyages for these ship types are significantly more expensive than others.
 
-### 1.3.2 Operational Cost Across Different Ship Types
-
-1
-
-2
-
-3
-
-4
-
-5
-
-6
-
-7
-
-{R}
-
-p2 \<- ggplot(data, aes(x = Operational_Cost_USD)) +
-
-geom_histogram(bins=20,
-
-color="grey25",
-
-fill="blue") +
-
-ggtitle("Distribution of Operational Cost (USD)")
-
-print(p2)
-
- 
-
- 
-
-הההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההההה
-
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAEA0lEQVR4XqVWfWwTZRzuhgJqFJGAgga77dZr73p3vd7csoxowThkEowEJCAQIEMicQnfX1ERjUz/wGgUyALb5EOTAWMgARJhgCwlbGxgxja7NbjOLaPQZWvZ1m1+oO9Td83tly6j8iRP1r33+7rf+77P70ymBwTHZTzFiaqQIirTeVGeYVUUi2n+/FHU7qGBJI2N3rO94XBPuK+v333lSkGSTX2R2sWFJLv9WY7jxkQXWOWvvTFnDksw0D8w8A8Y6OhoShXkDIObaYqmPc7+JBjXYkKW5SesipZdevLkp7mr8xYm2xypbDkhRZYnHTt+YoeeBOzr7//LlZ0zG0XAzyJp1q0ffLRcSc+cabNpk2nsIUi1O231Hk8ZArEW9V6sqPjWrmVkWwRlWnNLy2VjIrCgsHA99irnrXlv3mxoKGPJ//YHAnWr16x/B8XR+BEka9q4r7/Zk0eDdXR2+oKh0G26Dvb09gZr6+qPhLq7O4zrbe3tNZwsO2kOHQlpWVmzhgsaD2/7/bW8XU2jCaKwOhzmc+UXvqSO8ZC1789P8r941yy89ByNb4T+Vn4a4EH5S+3NEl6WeRo4CrPZNTZZ0KY6M6e93hUMttEAYGdX8Pcm762f2B5UoXL6HNxf9N0GTlUnvpCZ+ZggCKNN+nGfKknjebtTfn/dhsU/V7h3o7/UmfE+nuHoc4IiYqPRntC9e3epbWtbW9WOnTtXrtu4beniFSvfRuFQFROS/ObzXaIORkIRoAzR6hhYe5KKDxzaTG0pG73eMxFfi6y+CkmhBkYWH/p+s9WaPkFPogNvyHzD1N5Idh/D0EcTBHIk490FBWvNDsfTNBEnqa909/R0UXsj2/3+GymSUzNBZkpKS7ffavZdgGBSQ7CquqY4RXRyxiQ8r075fNeu96itThQANdm7v2gttPO/ytgpsUqSlJY1Y9b58otfUSdWQDc2GMcWOob9gcjeCQQ81La52Ve+/bP8XLQV+y+K4jPGAnUkwiDWm2Ef6xoajp86fTb/auW1wq5QqJ3agEtzVy2I1eYhwD0qOnhwE3WOhxu3fbgs1sGJwuVyPZL18vQcdllbqXM8bGltdVtEVaHxo4DOuSsr91HH/8Piwz9sGfat0LbLFe49RgfsS3XNjcO/ejw/st9/0IDYp8amptP0GdYGL3hMJGLIQRTZ9b2PFmCAYbBBcjBjjMHYKPdG5IUFxIlkc8sbSc5aD+nhef5JmiAKCCFG8qq8NQvRZ/31UyUp+Vr19QPGRGzgHY18CTFYFOV5XA0oCNQf3RkaeRhAyY3/4y5QXSspLfuYjOvEwcJG/jgZFoNfQVB27Ae7qPXzFi2Zq2nao9T0oYGJifEMEWYfK+kjfukQ/AsQrybRGPJ2TQAAAABJRU5ErkJggg== "Modify Chunk Options")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAABH0lEQVR4XmNgGAVDCqxdvzVhzcbNm6mBK6uqVqObDwf///9nXLt+SzG6JlJxTW3tVpBZ6OajgP3797Os3bClFV0zsbiuoXEfyAx0c7GCRTt3cq9Zv7UX3RBCuL6x8TBIL7p5eMGqVbv512zYMgvdMFy4san1FEgPujlEgbVrd0gCg3EJuqHouLm59TxILbp+ksCqjdvV12zcshLdcBhuamm7BFKDro8ssGbjRr01G7aux7Ckte0qSA5dPUVg9frNDkDLNsGDq7X9GkgMXR1VwNoNm0MgPmm/DmKjy49wwLjIbzM1MLq5GIBxgc9mhm2eFGGwGYQA42wvDI2kYrAZhADjdEyNpGKwGYQA42Q3DI2kYrAZBEGfy2aq4FEw5AAASl8F3R9fQqAAAAAASUVORK5CYII= "Run All Chunks Above")![](data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAaCAYAAADFTB7LAAAAcElEQVR4Xu3OwQmAQAxE0bClWYCW5N06tM6V2YPg5CjoF/JhLoHAi6iqn9eOefUbqrYvHY0cQDLyAlKRNyARmYA0ZMLRkAlGQyaU72tkAtlim7r/vJqDUDjlKBROOQyFU2icQuMUGqfQuBEaV1XPOwEx96nYACK8+wAAAABJRU5ErkJggg== "Run Current Chunk")
-
-### 1.3.3 Boxplots of Operational Cost by Ship Type
+-   **The "None" category may represent missing or misclassified data**, as it exhibits a different pattern from the other categories.
 
 ```{R}
 ggplot(data, aes(x=Ship_Type, y=Operational_Cost_USD, fill=Ship_Type)) +
@@ -149,25 +196,189 @@ ggplot(data, aes(x=Ship_Type, y=Operational_Cost_USD, fill=Ship_Type)) +
 
 ```
 
+### EDA 5: Operational Costs and Fuel Efficiency by Route and Ship Type
+
+This **treemap** represents the **distribution of operational costs (`Operational_Cost_USD`) and fuel efficiency (`Efficiency_nm_per_kWh`) across different route types (`Route_Type`) and ship types (`Ship_Type`)**.
+
+-   **Each rectangle's size corresponds to the total operational cost for that ship type and route.**
+
+-   **Colors represent fuel efficiency (`Efficiency_nm_per_kWh`), with different shades indicating different efficiency levels.**
+
+-   **The chart is divided by route types** (Long-haul, Coastal, Short-haul, Transoceanic, etc.), with ship types nested within each category.
+
 ```{R}
-ship_cor <- cor(data[, c("Speed_Over_Ground_knots", "Engine_Power_kW", "Distance_Traveled_nm", 
-                         "Draft_meters", "Cargo_Weight_tons", "Operational_Cost_USD", 
-                         "Revenue_per_Voyage_USD", "Turnaround_Time_hours","Efficiency_nm_per_kWh", 
-                         "Seasonal_Impact_Score", "Weekly_Voyage_Count", "Average_Load_Percentage")])
+treemap_data <- data %>%
+  group_by(Route_Type, Ship_Type) %>%
+  summarise(Operational_Cost_USD = sum(Operational_Cost_USD, na.rm = TRUE),
+            Avg_Efficiency = mean(Efficiency_nm_per_kWh, na.rm = TRUE))
 
-corrplot(ship_cor)
+treemap(treemap_data,
+        index = c("Route_Type", "Ship_Type"), 
+        vSize = "Operational_Cost_USD", 
+        vColor = "Avg_Efficiency", 
+        title = "Operational Costs and Fuel Efficiency by Route and Ship Type",
+        title.legend = "Average Fuel Efficiency (nm per kWh)")
+```
 
+[**Insights:**]{.underline}
+
+1.  **Long-haul and Transoceanic routes have the largest blocks**, suggesting they have the highest total operational costs.
+
+2.  **Coastal and Short-haul routes have smaller blocks**, indicating lower total operational costs.
+
+3.  **Different ship types contribute differently to costs across route types**:
+
+    -   **Bulk Carriers, Tankers, and Container Ships appear dominant in cost-heavy routes** (e.g., Long-haul, Transoceanic).
+
+    -   **Fish Carriers and "None" category have relatively smaller cost contributions**.
+
+4.  **Efficiency levels (colors) seem to vary across ship types and routes**, suggesting that certain combinations may be more fuel-efficient than others.
+
+### EDA 6: Average Fuel Efficiency by Ship Type
+
+The x-axis represents fuel efficiency (nm per kWh)—higher values indicate more fuel-efficient ships. The y-axis represents different ship types, showing how fuel efficiency is distributed for each type. The color gradient represents different efficiency levels, from low (dark purple) to high (yellow).
+
+-   **Bulk Carriers and Container Ships tend to have lower average fuel efficiency**, with most values concentrated below 1.0 nm per kWh.
+
+-   **Fish Carriers and Tankers show broader distributions**, suggesting that some voyages are significantly more fuel-efficient than others.
+
+-   **The "None" category has an unusual distribution**, indicating potential data inconsistencies or misclassified entries.
+
+-   No ship type consistently reaches extremely high efficiency levels (\>1.5 nm per kWh), meaning that all ship types experience efficiency limitations.
+
+```{R}
+ggplot(data, 
+       aes(x = Efficiency_nm_per_kWh, 
+           y = Ship_Type, 
+           fill = stat(x))) +  
+  geom_density_ridges_gradient(scale = 3, rel_min_height = 0.01) +
+  scale_fill_viridis_c(name = "Efficiency Level", option = "C") + 
+  scale_x_continuous(name = "Average Fuel Efficiency (nm per kWh)", expand = c(0, 0)) +
+  scale_y_discrete(name = "Ship_Type") +
+  theme_ridges() +
+  ggtitle("Average Fuel Efficiency by Ship Type")
+
+```
+
+[**Insights**]{.underline}:
+
+-   **Bulk Carriers and Container Ships tend to have lower average fuel efficiency**, with most values concentrated below 1.0 nm per kWh.
+
+-   **Fish Carriers and Tankers show broader distributions**, suggesting that some voyages are significantly more fuel-efficient than others.
+
+-   **The "None" category has an unusual distribution**, indicating potential data inconsistencies or misclassified entries.
+
+-   **No ship type consistently reaches extremely high efficiency levels (\>1.5 nm per kWh), meaning that all ship types experience efficiency limitations**
+
+### EDA 7: Fuel Efficiency vs. Operational Cost
+
+-   **The data points are widely scattered**, showing no clear upward or downward trend.
+
+-   **The red regression line is almost flat**, indicating that **fuel efficiency has little to no impact on operational cost**.
+
+-   **There is no strong clustering**, meaning that voyages with similar efficiency levels can still have vastly different operational costs.
+
+-   **Voyages with high operational costs exist across all efficiency levels**, suggesting that other factors (e.g., route type, cargo load, port fees) contribute more to cost variations.
+
+```{R}
+ggplot(data, aes(x = Efficiency_nm_per_kWh, y = Operational_Cost_USD)) +
+  geom_point(alpha=0.5, color="blue") +
+  geom_smooth(method="lm", color="red") +
+  theme_minimal() +
+  ggtitle("Fuel Efficiency vs. Operational Cost")
+
+```
+
+**Scatter plot of Efficiency vs. Revenue** → To check if higher efficiency correlates with higher revenue.
+
+### EDA 8: Voyage Efficiency vs. Revenue per Voyage
+
+This **scatter plot** visualizes the relationship between **voyage efficiency (`Efficiency_nm_per_kWh`) and revenue per voyage (`Revenue_per_Voyage_USD`)**.
+
+-   **Each green dot represents a voyage**, positioned based on its efficiency and revenue.
+
+-   **The red regression line shows the general trend**, indicating whether efficiency is positively or negatively correlated with revenue.
+
+#### Insight
+
+-   **The data points are widely dispersed, showing no strong pattern.**
+
+-   **The regression line is nearly flat**, suggesting **little to no correlation between voyage efficiency and revenue**.
+
+-   **Voyages with high revenue exist at all efficiency levels**, meaning that a more efficient voyage does not necessarily generate higher earnings.
+
+-   **There is no clear clustering**, indicating that revenue is likely influenced by other operational factors rather than efficiency alone.
+
+```{R}
+ggplot(data, aes(x = Efficiency_nm_per_kWh, y = Revenue_per_Voyage_USD)) +
+  geom_point(alpha=0.5, color="green") +
+  geom_smooth(method="lm", color="red") +
+  theme_minimal() +
+  ggtitle("Voyage Efficiency vs. Revenue per Voyage")
+
+```
+
+### EDA 9: Correlation matrix
+
+**No Strong Linear Relationships**
+
+-   The correlation coefficients between **fuel efficiency (`Efficiency_nm_per_kWh`) and both revenue (`Revenue_per_Voyage_USD`) and cost (`Operational_Cost_USD`) are nearly zero**. This suggests that **efficiency does not have a strong direct influence on financial metrics**.
+
+-   Other operational parameters (e.g., `Turnaround_Time_hours`, `Cargo_Weight_tons`) also do not show significant relationships with costs or revenues.
+
+**Slight Positive Correlations**
+
+-   There are some **weak positive correlations** (e.g., `Cargo_Weight_tons` with `Operational_Cost_USD`), but the values remain very low (around 0.03). This implies **a minimal impact of cargo weight on operational costs**, which may be due to other underlying factors.
+
+**Slight Negative Correlations**
+
+-   `Speed_Over_Ground_knots` has a **very weak negative correlation** with efficiency (`Efficiency_nm_per_kWh`), indicating that **higher speeds may slightly reduce efficiency**, but the impact is almost negligible.
+
+```{r}
+data_numeric <- data %>% select(where(is.numeric))
 
 ```
 
 ```{R}
-ggplot(data, aes(x = Weather_Condition, 
-                 y = Efficiency_nm_per_kWh)) +
-  stat_halfeye(adjust = 0.5,
-               justification = -0.2,
-               .width = 0,
-               point_colour = NA) +
-  geom_boxplot(width = .20,
-               outlier.shape = NA)
+ggstatsplot::ggcorrmat(
+  data = data_numeric, 
+  cor.vars = colnames(data_numeric),  
+  matrix.type = "lower",  
+  label = TRUE,  
+  label.size = 5, 
+  title = "Correlation Matrix",  
+  title.size = 12
+) + 
+  theme(
+    text = element_text(size = 12),  
+    axis.text.x = element_text(size = 10, angle = 45, hjust = 1),  
+    axis.text.y = element_text(size = 10),  
+    plot.title = element_text(size = 12, face = "bold"), 
+    legend.text = element_text(size = 10),  
+    legend.title = element_text(size = 10)  
+  )
+
 
 ```
+
+## 1.6 Final Conclusion:
+
+### 1.6.1 Key Takeaways
+
+1.  **Fuel efficiency does not significantly affect cost or revenue.**
+
+2.  **Operational costs and revenue are weakly correlated, meaning higher costs do not necessarily lead to higher earnings.**
+
+3.  **Cargo weight and travel distance do not strongly influence financial outcomes.**
+
+4.  **Other factors, such as market conditions, freight rates, and port fees, likely play a much bigger role.**
+
+### 1.6.2 **Future Research**
+
+To improve profitability in shipping operations, future research could focus on:
+
+-   **Identifying the key drivers of revenue beyond fuel efficiency and operational cost.**
+
+-   **Investigating the impact of freight rates, seasonal demand, and port fees on profitability.**
+
+-   **Exploring alternative ways to optimize operational costs without sacrificing revenue.**

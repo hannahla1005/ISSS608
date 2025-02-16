@@ -35,10 +35,7 @@ cols <- c("Mfg_Month", "HP_Bin", "CC_bin", "Doors", "Gears", "Cylinders", "Fuel_
           "Met_Color", "Automatic", "Mfr_Guarantee", "BOVAG_Guarantee", "CD_Player", "Airbag_2", "Airco", "Automatic_airco", 
           "Boardcomputer", "Mistlamps", "Central_Lock", "Powered_Windows", "Power_Steering", "Radio",
           "Sport_Model", "Backseat_Divider", "Metallic_Rim", "Radio_cassette", "Tow_Bar")
-car resale <- read_xls ("data/toyotacorolla.xls",
-                        sheet =”data")
-estate(td - as. character (1d) 15%
-sutate each (funs (factor(.)), cols)
+
 ```
 
 ```{R}
