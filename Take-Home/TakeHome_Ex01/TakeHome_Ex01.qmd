@@ -25,7 +25,7 @@ data$Date <- as.Date(data$Date, format="%Y-%m-%d")
 
 ```
 
-```{}
+```         
 ```
 
 ```{R}

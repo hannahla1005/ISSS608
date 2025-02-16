@@ -99,4 +99,4 @@ ggcoefstats(modell,
             output = "plot")
 ```
 
-![](images/Screenshot 2025-02-15 at 3.45.50 PM.png)
+![](images/Screenshot%202025-02-15%20at%203.45.50%20PM.png)
