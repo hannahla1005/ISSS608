@@ -1,0 +1,21 @@
+---
+title: "TakeHome_Ex02"
+author: "TzuTing Hunag"
+date: "February 25, 2025"
+date-modified: "last-modified"
+execute:
+  warning: false
+---
+
+## Get Starting 
+
+```{r}
+pacman::p_load(readxl, gifski, gapminder,
+               plotly, gganimate,tidyverse, CGPfunctions, ggHoriPlot, tsibble, feasts, fable, seasonal)
+```
+
+## Import Data
+
+```{r}
+MR_data <- read_xlsx("data/Merchandise Trade by Region_Market.xlsx")
+```
