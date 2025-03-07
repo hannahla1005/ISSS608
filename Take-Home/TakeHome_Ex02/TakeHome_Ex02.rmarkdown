@@ -7,12 +7,24 @@ execute:
   warning: false
 ---
 
+
+
+
+
 ## Get Starting
+
+
+
+
 
 ```{r}
 pacman::p_load(readxl, gifski, gapminder,
                plotly, gganimate,tidyverse, CGPfunctions, ggHoriPlot, tsibble, readxl, feasts, fable, seasonal, scales)
 ```
+
+
+
+
 
 ## Data Preparation
 
@@ -28,12 +40,20 @@ This code imports three datasets from an Excel file named **"Trade_Region_Marke
 
 The `skip = 10` parameter ensures that the first **10 rows** are skipped, likely to remove headers or metadata, keeping only the relevant data.
 
+
+
+
+
 ```{r}
 import_m <- read_excel("data/Trade_Region_Market.xlsx", sheet = "T1", skip = 10)
 export_m <- read_excel("data/Trade_Region_Market.xlsx", sheet = "T2", skip = 10)
 re_export_m <- read_excel("data/Trade_Region_Market.xlsx", sheet = "T3", skip = 10)
 
 ```
+
+
+
+
 
 ### Reshaping and Formatting Export/Import Data
 
@@ -52,6 +72,10 @@ re_export_m <- read_excel("data/Trade_Region_Market.xlsx", sheet = "T3", skip = 
 -   **Date Conversion**:
 
     -   Uses `yearmonth(Month_Year)` to convert the `"Month_Year"` column into a proper **date format**, ensuring it is recognized as a **year-month** object.
+
+
+
+
 
 ```{r}
 export_long <- export_m %>%
@@ -75,6 +99,10 @@ colnames(export_m)
 colnames(re_export_m)
 ```
 
+
+
+
+
 ## TOTAL MERCHANDISE TRADE AT CURRENT PRICES, 2020 - 2024
 
 ### Export
@@ -96,6 +124,10 @@ This code calculates **total exports** by summing **direct exports** and **
     -   Calculates **Total Export** as:
 
         **Total Export=Annual Export+Annual Re-Export**
+
+
+
+
 
 ```{r}
 # 計算 Export 年度總和
@@ -128,7 +160,15 @@ print(export_total_summary)  # 確保結果正確
 
 ```
 
+
+
+
+
 ### Import
+
+
+
+
 
 ```{r}
 
@@ -145,15 +185,15 @@ print(import_summary)
 
 ```
 
+
+
+
+
 ### Combine both Export and Import Data
 
-To analyze total merchandise trade, both export and import data need to be combined. This process ensures a comprehensive view of trade activities over the years.
 
-**Merge Export and Import Data**
 
--   The annual **export** and **import** summaries are combined using `bind_rows()`.
 
--   A new column **"Type"** is added to distinguish **exports** from **imports**.
 
 ```{r}
 
@@ -170,18 +210,6 @@ print(combined_summary)  # 確保數據正確
 
 
 ```
-
-### Visualizing Total Merchandise Trade
-
-Steps in the Calculation:
-
-1.  Group by Year → Aggregates trade data on a yearly basis.
-
-2.  Sum Export & Import Values → Computes `Total_Trade` as the sum of both.
-
-3.  Arrange by Year → Ensures chronological order for accurate trend analysis.
-
-4.  Print the Data → Verifies that the calculations are correct.
 
 ```{r}
 # 計算 2024 年的 Total Merchandise Trade
@@ -256,126 +284,3 @@ ggplot(combined_summary, aes(x = Year, y = Value, fill = interaction(Year, Type)
 
 ```
 
-The updated version presents several key enhancements over the previous visualization :
-
-1.  **More Informative Representation**
-
-    **- Added a line chart** to track **Total Merchandise Trade**, making overall trade trends clearer.
-
-    **- Percentage change labels** highlight year-over-year growth and decline, making trade fluctuations more intuitive.
-
-2.  **Better Data Clarity & Comparison**
-
-    **- Side-by-side bar charts** for **exports and imports**, allowing for an easy **trade balance comparison**.
-
-    **- Distinct colors** differentiate trade types while maintaining clarity.
-
-3.  **Enhanced Readability**
-
-    -   **Larger and bold labels** for key figures (e.g., total trade values).
-
-    -   **Color-coded percentage changes** (blue for growth, red for decline) improve quick interpretation.
-
-## 
-
-## 
-**EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024**
-
-```{r}
-services_data <- read_excel("Data/Trade in Services.xlsx", sheet = "T1",  skip = 10)
-```
-
-```{r}
-services_2024 <- services_data %>%
-  select(`Data Series`, `2024`) %>%  # 只選擇「類別名稱」和「2024 年值」
-  rename(Category = `Data Series`, Value = `2024`)  # 重新命名欄位
-
-
-```
-
-### Select Categories
-
-```{r}
-# 定義你要的類別
-selected_categories <- c(
-  "Manufacturing Services On Physical Inputs Owned By Others",
-  "Maintenance And Repair Services",
-  "Transport",
-  "Travel",
-  "Insurance",
-  "Government Goods And Services",
-  "Construction",
-  "Financial",
-  "Telecommunications, Computer & Information",
-  "Charges For The Use Of Intellectual Property",
-  "Personal, Cultural And Recreational",
-  "Other Business Services"
-)
-
-# 過濾指定的類別
-filtered_services <- services_2024 %>%
-  filter(Category %in% selected_categories) %>%
-  drop_na() %>%       # 移除 NA 值
-  filter(Value > 0)   # 移除數值為 0 的行
-
-# 查看數據
-print(filtered_services)
-
-```
-
-```{r}
-# 使用 `group_by()` 讓 R 自動給相同的類別編號
-selected_categories_NEW <- filtered_services %>%
-  group_by(Category) %>%
-  mutate(Row_Number = row_number()) %>%  # 每個類別的出現順序
-  ungroup() %>%
-  mutate(Type = ifelse(Row_Number == 1, "Export", "Import")) %>%  # 第一個當作 Export，第二個當作 Import
-  select(-Row_Number)  # 移除輔助欄位
-
-print(selected_categories_NEW)
-```
-
-```{r}
-selected_categories_NEW <- selected_categories_NEW %>%
-  mutate(Value = Value / 1000)
-# 拆分 Export 和 Import 數據
-export_data <- selected_categories_NEW %>% filter(Type == "Export")
-import_data <- selected_categories_NEW %>% filter(Type == "Import")
-
-```
-
-### Export
-
-### Import
-
-```{r}
-colors_export <- c("#1f77b4", "#ff7f0e", "#9467bd", "#d62728", "#2ca02c", "#8c564b", "#e377c2", "#7f7f7f","#6C3365", "#408080")
-
-colors_import <- c("#17becf", "#ffbb78", "#c5b0d5" , "#ff9896","#98df8a", "#c49c94", "#f7b6d2", "#c7c7c7","#C07AB8", "#95CACA")
-
-
-# Export 的圓餅圖
-export_pie <- plot_ly(export_data, labels = ~Category, values = ~Value, type = 'pie',
-                      textinfo = 'label+percent', hoverinfo = 'label+value+percent',
-                      marker = list(colors = colors_export), hole = 0.2) %>%
-  layout(title = "Exports of Services (2024)")
-
-# Import 的圓餅圖
-import_pie <- plot_ly(import_data, labels = ~Category, values = ~Value, type = 'pie',
-                      textinfo = 'label+percent', hoverinfo = 'label+value+percent',
-                      marker = list(colors = colors_export), hole = 0.2) %>%
-  layout(title = "Imports of Services (2024)")
-
-# 顯示兩個圖
-export_pie
-import_pie
-
-```
-
-The updated version presents several key enhancements over the previous visualization :
-
-1.  **Interactive & Dynamic** – Hover to see exact values, zoom & pan for better exploration.
-
-2.  **Clearer Labels** – Only major segments display labels, reducing clutter.
-
-3.  **Better Color Differentiation** – High-contrast colors make categories easier to distinguish.

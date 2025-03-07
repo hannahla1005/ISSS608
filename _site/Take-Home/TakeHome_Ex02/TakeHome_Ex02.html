@@ -212,6 +212,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../In-Class/Inclass_Ex05.html">
  <span class="dropdown-text">In-class Exercise 5</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../In-Class/Inclass_Ex07.html">
+ <span class="dropdown-text">In-class Exercise 7</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -222,6 +226,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../../Take-Home/TakeHome_Ex01/TakeHome_Ex01.html">
  <span class="dropdown-text">Take home Exercise 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../Take-Home/TakeHome_Ex02/TakeHome_Ex02.html">
+ <span class="dropdown-text">Take home Exercise 2</span></a>
   </li>  
     </ul>
   </li>
@@ -252,7 +260,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#get-starting" id="toc-get-starting" class="nav-link active" data-scroll-target="#get-starting">Get Starting</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">Data Preparation</a>
+  <ul class="collapse">
   <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">Import Data</a></li>
+  <li><a href="#reshaping-and-formatting-exportimport-data" id="toc-reshaping-and-formatting-exportimport-data" class="nav-link" data-scroll-target="#reshaping-and-formatting-exportimport-data">Reshaping and Formatting Export/Import Data</a></li>
+  </ul></li>
+  <li><a href="#total-merchandise-trade-at-current-prices-2020---2024" id="toc-total-merchandise-trade-at-current-prices-2020---2024" class="nav-link" data-scroll-target="#total-merchandise-trade-at-current-prices-2020---2024">TOTAL MERCHANDISE TRADE AT CURRENT PRICES, 2020 - 2024</a>
+  <ul class="collapse">
+  <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export">Export</a></li>
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
+  <li><a href="#combine-both-export-and-import-data" id="toc-combine-both-export-and-import-data" class="nav-link" data-scroll-target="#combine-both-export-and-import-data">Combine both Export and Import Data</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -285,7 +303,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 1, 2025</p>
+      <p class="date-modified">March 7, 2025</p>
     </div>
   </div>
     
@@ -300,16 +318,261 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="get-starting">Get Starting</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, gifski, gapminder,</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               plotly, gganimate,tidyverse, CGPfunctions, ggHoriPlot, tsibble, feasts, fable, seasonal)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>               plotly, gganimate,tidyverse, CGPfunctions, ggHoriPlot, tsibble, readxl, feasts, fable, seasonal, scales)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="import-data" class="level2">
-<h2 class="anchored" data-anchor-id="import-data">Import Data</h2>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation">Data Preparation</h2>
+<section id="import-data" class="level3">
+<h3 class="anchored" data-anchor-id="import-data">Import Data</h3>
+<p>This code imports three datasets from an Excel file named&nbsp;<strong>“Trade_Region_Market.xlsx”</strong>, each from a different sheet:</p>
+<ul>
+<li><p><strong>“T1”</strong>&nbsp;→&nbsp;<code>import_m</code>: Contains import data</p></li>
+<li><p><strong>“T2”</strong>&nbsp;→&nbsp;<code>export_m</code>: Contains export data</p></li>
+<li><p><strong>“T3”</strong>&nbsp;→&nbsp;<code>re_export_m</code>: Contains re-export data</p></li>
+</ul>
+<p>The&nbsp;<code>skip = 10</code>&nbsp;parameter ensures that the first&nbsp;<strong>10 rows</strong>&nbsp;are skipped, likely to remove headers or metadata, keeping only the relevant data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>MR_data <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data/Merchandise Trade by Region_Market.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>import_m <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Trade_Region_Market.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>, <span class="at">skip =</span> <span class="dv">10</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>export_m <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Trade_Region_Market.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T2"</span>, <span class="at">skip =</span> <span class="dv">10</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>re_export_m <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Trade_Region_Market.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T3"</span>, <span class="at">skip =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reshaping-and-formatting-exportimport-data" class="level3">
+<h3 class="anchored" data-anchor-id="reshaping-and-formatting-exportimport-data">Reshaping and Formatting Export/Import Data</h3>
+<ul>
+<li><p><strong>Pivoting Data</strong>:</p>
+<ul>
+<li><p>Converts the dataset from a&nbsp;<strong>wide format</strong>&nbsp;to a&nbsp;<strong>long format</strong>&nbsp;using&nbsp;<code>pivot_longer()</code>.</p></li>
+<li><p>Keeps the&nbsp;<strong>“Data Series”</strong>&nbsp;column unchanged.</p></li>
+<li><p>Transforms all other columns (representing months and years) into two new columns:</p>
+<ul>
+<li><p><code>"Month_Year"</code>&nbsp;→ Contains the original column names (e.g., “2023 Jan”).</p></li>
+<li><p><code>"Export_Value"</code>&nbsp;→ Stores the corresponding numerical export values.</p></li>
+</ul></li>
+</ul></li>
+<li><p><strong>Date Conversion</strong>:</p>
+<ul>
+<li>Uses&nbsp;<code>yearmonth(Month_Year)</code>&nbsp;to convert the&nbsp;<code>"Month_Year"</code>&nbsp;column into a proper&nbsp;<strong>date format</strong>, ensuring it is recognized as a&nbsp;<strong>year-month</strong>&nbsp;object.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>export_long <span class="ot">&lt;-</span> export_m <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"Month_Year"</span>, <span class="at">values_to =</span> <span class="st">"Export_Value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">yearmonth</span>(Month_Year)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, Date, Export_Value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>import_long <span class="ot">&lt;-</span> import_m <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"Month_Year"</span>, <span class="at">values_to =</span> <span class="st">"Import_Value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">yearmonth</span>(Month_Year)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, Date, Import_Value) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(import_m)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(export_m)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(re_export_m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="total-merchandise-trade-at-current-prices-2020---2024" class="level2">
+<h2 class="anchored" data-anchor-id="total-merchandise-trade-at-current-prices-2020---2024">TOTAL MERCHANDISE TRADE AT CURRENT PRICES, 2020 - 2024</h2>
+<section id="export" class="level3">
+<h3 class="anchored" data-anchor-id="export">Export</h3>
+<p>This code calculates&nbsp;<strong>total exports</strong>&nbsp;by summing&nbsp;<strong>direct exports</strong>&nbsp;and&nbsp;<strong>re-exports</strong>&nbsp;for each year from&nbsp;<strong>2020 to 2024</strong>:</p>
+<ol type="1">
+<li><p><strong>Extract &amp; Aggregate Data</strong>:</p>
+<ul>
+<li><p>Converts <code>export_m</code> and <code>re_export_m</code> into long format.</p></li>
+<li><p>Filters <strong>“Total All Markets”</strong> and extracts the <strong>year (<code>YYYY</code>)</strong>.</p></li>
+<li><p>Aggregates <strong>Annual Export</strong> and <strong>Annual Re-Export</strong>&nbsp;separately.</p></li>
+</ul></li>
+<li><p><strong>Compute Total Exports</strong>:</p>
+<ul>
+<li><p>Merges <strong>exports and re-exports</strong> using <code>left_join()</code>.</p></li>
+<li><p>Calculates <strong>Total Export</strong> as:</p>
+<p><strong>Total Export=Annual Export+Annual Re-Export</strong></p></li>
+</ul></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 計算 Export 年度總和</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>export_summary <span class="ot">&lt;-</span> export_m <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"Month_Year"</span>, <span class="at">values_to =</span> <span class="st">"Export_Value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Total All Markets"</span>) <span class="sc">%&gt;%</span>  <span class="co"># 只選擇 "Total All Markets"</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(Month_Year, <span class="dv">1</span>, <span class="dv">4</span>))) <span class="sc">%&gt;%</span>  <span class="co"># 擷取 "YYYY" 為年份</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2024</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Annual_Export =</span> <span class="fu">sum</span>(Export_Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span>  <span class="co"># 每年加總</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 計算 Re-Export 年度總和</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>reexport_summary <span class="ot">&lt;-</span> re_export_m <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"Month_Year"</span>, <span class="at">values_to =</span> <span class="st">"ReExport_Value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Total All Markets"</span>) <span class="sc">%&gt;%</span>  <span class="co"># 只選擇 "Total All Markets"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(Month_Year, <span class="dv">1</span>, <span class="dv">4</span>))) <span class="sc">%&gt;%</span>  <span class="co"># 擷取 "YYYY" 為年份</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2024</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Annual_ReExport =</span> <span class="fu">sum</span>(ReExport_Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span>  <span class="co"># 每年加總</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 合併 Export + Re-Export</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>export_total_summary <span class="ot">&lt;-</span> export_summary <span class="sc">%&gt;%</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(reexport_summary, <span class="at">by =</span> <span class="st">"Year"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Total_Export =</span> Annual_Export <span class="sc">+</span> Annual_ReExport)  <span class="co"># 計算總出口</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(export_total_summary)  <span class="co"># 確保結果正確</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+   Year Annual_Export Annual_ReExport Total_Export
+  &lt;int&gt;         &lt;dbl&gt;           &lt;dbl&gt;        &lt;dbl&gt;
+1  2020       234450.         281195.      515645.
+2  2021       278975.         335106.      614081 
+3  2022       329669.         380298.      709967.
+4  2023       285053.         353351.      638403.
+5  2024       286598.         387907.      674505 </code></pre>
+</div>
+</div>
+</section>
+<section id="import" class="level3">
+<h3 class="anchored" data-anchor-id="import">Import</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>import_summary <span class="ot">&lt;-</span> import_m <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">names_to =</span> <span class="st">"Month_Year"</span>, <span class="at">values_to =</span> <span class="st">"Import_Value"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span> <span class="sc">==</span> <span class="st">"Total All Markets"</span>) <span class="sc">%&gt;%</span>  <span class="co"># 這裡要加 `%&gt;%`</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(Month_Year, <span class="dv">1</span>, <span class="dv">4</span>))) <span class="sc">%&gt;%</span>  <span class="co"># 確保 Year 正確提取</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2020</span> <span class="sc">&amp;</span> Year <span class="sc">&lt;=</span> <span class="dv">2024</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Annual_Import =</span> <span class="fu">sum</span>(Import_Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year)  </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(import_summary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+   Year Annual_Import
+  &lt;int&gt;         &lt;dbl&gt;
+1  2020       453467.
+2  2021       545882.
+3  2022       655436 
+4  2023       567319.
+5  2024       611360.</code></pre>
+</div>
+</div>
+</section>
+<section id="combine-both-export-and-import-data" class="level3">
+<h3 class="anchored" data-anchor-id="combine-both-export-and-import-data">Combine both Export and Import Data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>combined_summary <span class="ot">&lt;-</span> export_total_summary <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Value =</span> Total_Export) <span class="sc">%&gt;%</span>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="st">"Export"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    import_summary <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">Value =</span> Annual_Import) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="st">"Import"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(combined_summary)  <span class="co"># 確保數據正確</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+    Year Annual_Export Annual_ReExport   Value Type  
+   &lt;int&gt;         &lt;dbl&gt;           &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; 
+ 1  2020       234450.         281195. 515645. Export
+ 2  2021       278975.         335106. 614081  Export
+ 3  2022       329669.         380298. 709967. Export
+ 4  2023       285053.         353351. 638403. Export
+ 5  2024       286598.         387907. 674505  Export
+ 6  2020           NA              NA  453467. Import
+ 7  2021           NA              NA  545882. Import
+ 8  2022           NA              NA  655436  Import
+ 9  2023           NA              NA  567319. Import
+10  2024           NA              NA  611360. Import</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 計算 2024 年的 Total Merchandise Trade</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>trade_summary <span class="ot">&lt;-</span> combined_summary <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(trade_summary)  <span class="co"># 確保數據正確</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+   Year Total_Trade
+  &lt;int&gt;       &lt;dbl&gt;
+1  2020     969112.
+2  2021    1159963.
+3  2022    1365403.
+4  2023    1205723.
+5  2024    1285864.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>total_trade_summary <span class="ot">&lt;-</span> trade_summary <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span>  <span class="co"># 確保年份是遞增排序</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Change =</span> Total_Trade <span class="sc">-</span> <span class="fu">lag</span>(Total_Trade),  <span class="co"># 計算變化值</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Change_Perc =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> (Total_Trade <span class="sc">-</span> <span class="fu">lag</span>(Total_Trade)) <span class="sc">/</span> <span class="fu">lag</span>(Total_Trade), <span class="dv">1</span>))  <span class="co"># 計算變化率（%）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Value, <span class="at">fill =</span> <span class="fu">interaction</span>(Year, Type))) <span class="sc">+</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="at">preserve =</span> <span class="st">"single"</span>)) <span class="sc">+</span>  <span class="co"># Import &amp; Export 並排</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(Value <span class="sc">/</span> <span class="dv">1000</span>, <span class="dv">1</span>), <span class="st">"B"</span>)), </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="at">width =</span> <span class="fl">0.6</span>), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>) <span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 折線圖：顯示 Total Merchandise Trade</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> total_trade_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Trade, <span class="at">group =</span> <span class="dv">1</span>), </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="fl">1.2</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> total_trade_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Trade), </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> total_trade_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Total_Trade, </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(Total_Trade <span class="sc">/</span> <span class="dv">1000</span>, <span class="dv">1</span>), <span class="st">"B"</span>)), </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  </span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 在折線圖上標示變化值和變化率（不標第一年）</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> total_trade_summary <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Change_Perc)), </span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Year <span class="sc">-</span> <span class="fl">0.5</span>, <span class="at">y =</span> Total_Trade <span class="sc">+</span> <span class="dv">50</span>, </span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">ifelse</span>(Change_Perc <span class="sc">&gt;=</span> <span class="dv">0</span>, <span class="st">"+"</span>, <span class="st">""</span>), Change_Perc, <span class="st">"%"</span>), </span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="fu">as.factor</span>(Change_Perc <span class="sc">&gt;=</span> <span class="dv">0</span>)),  <span class="co"># 確保顏色設定</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">4</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># **手動設定顏色：上升綠色，下降紅色**</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"TRUE"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"FALSE"</span> <span class="ot">=</span> <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 縮小 "Total Merchandise Trade" 標籤大小，並調整位置</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">2022</span>, <span class="at">y =</span> <span class="fu">max</span>(total_trade_summary<span class="sc">$</span>Total_Trade) <span class="sc">*</span> <span class="fl">1.06</span>, </span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Total Merchandise Trade"</span>, <span class="at">size =</span> <span class="fl">2.5</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">1.5</span>, <span class="at">vjust =</span> <span class="dv">7</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Annual Merchandise Trade (2020-2024)"</span>,</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Value (Billion S$)"</span>, <span class="at">fill =</span> <span class="st">"Trade Type"</span>) <span class="sc">+</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">2020</span>, <span class="dv">2024</span>, <span class="dv">1</span>)) <span class="sc">+</span>  <span class="co"># 確保年份顯示正確</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> <span class="fu">comma_format</span>(<span class="at">scale =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1000</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.15</span>))) <span class="sc">+</span>  </span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"2020.Export"</span> <span class="ot">=</span> <span class="st">"#E57373"</span>,   </span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2020.Import"</span> <span class="ot">=</span> <span class="st">"#FFCDD2"</span>,   </span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2021.Export"</span> <span class="ot">=</span> <span class="st">"#FBC02D"</span>,   </span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2021.Import"</span> <span class="ot">=</span> <span class="st">"#FFF176"</span>,   </span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2022.Export"</span> <span class="ot">=</span> <span class="st">"#64B5F6"</span>,   </span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2022.Import"</span> <span class="ot">=</span> <span class="st">"#BBDEFB"</span>,   </span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2023.Export"</span> <span class="ot">=</span> <span class="st">"#81C784"</span>,   </span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2023.Import"</span> <span class="ot">=</span> <span class="st">"#C8E6C9"</span>,   </span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2024.Export"</span> <span class="ot">=</span> <span class="st">"#BA68C8"</span>,   </span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"2024.Import"</span> <span class="ot">=</span> <span class="st">"#E1BEE7"</span>)) <span class="sc">+</span>  </span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">20</span>),</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
