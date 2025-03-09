@@ -194,6 +194,8 @@ print(trade_summary)  # 確保數據正確
 
 ```
 
+### Calculate the Change Percentage
+
 ```{r}
 total_trade_summary <- trade_summary %>%
   arrange(Year) %>%  # 確保年份是遞增排序
@@ -201,6 +203,14 @@ total_trade_summary <- trade_summary %>%
          Change_Perc = round(100 * (Total_Trade - lag(Total_Trade)) / lag(Total_Trade), 1))  # 計算變化率（%）
 
 ```
+
+### Plot Annual Merchandise Trade
+
+(Before)
+
+![](Before_Trade.png){fig-align="center"}
+
+(After)
 
 ```{r}
 ggplot(combined_summary, aes(x = Year, y = Value, fill = interaction(Year, Type))) +
@@ -258,6 +268,8 @@ ggplot(combined_summary, aes(x = Year, y = Value, fill = interaction(Year, Type)
 
 The updated version presents several key enhancements over the previous visualization :
 
+**Advantages**
+
 1.  **More Informative Representation**
 
     **- Added a line chart** to track **Total Merchandise Trade**, making overall trade trends clearer.
@@ -276,24 +288,23 @@ The updated version presents several key enhancements over the previous visualiz
 
     -   **Color-coded percentage changes** (blue for growth, red for decline) improve quick interpretation.
 
-## 
-
-## 
-**EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024**
+## **EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024**
 
 ```{r}
-services_data <- read_excel("Data/Trade in Services.xlsx", sheet = "T1",  skip = 10)
+services_data <- read_excel("data/Trade in Services.xlsx", sheet = "T1", skip = 10)
 ```
 
 ```{r}
 services_2024 <- services_data %>%
-  select(`Data Series`, `2024`) %>%  # 只選擇「類別名稱」和「2024 年值」
-  rename(Category = `Data Series`, Value = `2024`)  # 重新命名欄位
-
-
+  select(`Data Series`, `2024`) %>% 
+  rename(Category = `Data Series`, Value = `2024`)  
 ```
 
 ### Select Categories
+
+The given R code defines a specific set of service categories including:
+
+**Manufacturing Services, Maintenance and Repair, Transport, Travel, Insurance, Government Goods and Services, Construction, Financial Services, Telecommunications and IT, Charges for the Use of Intellectual Property, Personal and Recreational Services, and Other Business Services**. 
 
 ```{r}
 # 定義你要的類別
@@ -323,8 +334,23 @@ print(filtered_services)
 
 ```
 
+### Classifying Service Trade Data into Exports and Imports
+
+-   **Groups data by `Category` (`group_by(Category)`)**
+
+    -   The dataset `filtered_services` is grouped by the `Category` column.
+
+-   **Assigns a row number within each category (`mutate(Row_Number = row_number())`)**
+
+    -   A sequential number is assigned to each row within the same category.
+
+-   **Labels the first row as "Export" and the second as "Import" by using (`mutate(Type = ifelse(Row_Number == 1, "Export", "Import"))`)**
+
+    -   If `Row_Number == 1`, it is labeled as `"Export"`.
+
+    -   If `Row_Number > 1`, it is labeled as `"Import"`.
+
 ```{r}
-# 使用 `group_by()` 讓 R 自動給相同的類別編號
 selected_categories_NEW <- filtered_services %>%
   group_by(Category) %>%
   mutate(Row_Number = row_number()) %>%  # 每個類別的出現順序
@@ -346,7 +372,17 @@ import_data <- selected_categories_NEW %>% filter(Type == "Import")
 
 ### Export
 
+(Before)
+
+![](Before_export.png){fig-align="center"}
+
 ### Import
+
+(Before)
+
+![](Before_Import.png){fig-align="center"}
+
+(After)
 
 ```{r}
 colors_export <- c("#1f77b4", "#ff7f0e", "#9467bd", "#d62728", "#2ca02c", "#8c564b", "#e377c2", "#7f7f7f","#6C3365", "#408080")
@@ -374,8 +410,64 @@ import_pie
 
 The updated version presents several key enhancements over the previous visualization :
 
+**Advantages**
+
 1.  **Interactive & Dynamic** – Hover to see exact values, zoom & pan for better exploration.
 
 2.  **Clearer Labels** – Only major segments display labels, reducing clutter.
 
 3.  **Better Color Differentiation** – High-contrast colors make categories easier to distinguish.
+
+## Time Series
+
+### Data Preparation
+
+```{r}
+export_long <- export_long %>%
+  mutate(Export_Value = as.numeric(Export_Value)) %>%
+  filter(!is.na(Export_Value), `Data Series` != "Total All Markets")
+  
+```
+
+```{r}
+sum(is.na(export_long$`Data Series`))
+```
+
+### Deal with Missing value
+```{r}
+export_long <- export_long %>%
+  mutate(Year = year(Date))  # 從 Date 提取年份
+```
+```{r}
+export_long <- export_long %>%
+  mutate(Year = factor(Year)) %>%
+  filter(Year %in% c(2020, 2024)) %>%
+  mutate(Year = factor(Year, levels = c(2020, 2024)))
+```
+
+
+```{r}
+export_long_filtered <- export_long %>%
+  group_by(`Data Series`, Year) %>%
+  summarize(Export_Value = sum(Export_Value, na.rm = TRUE), .groups = "drop")
+```
+
+
+### Exterminate every column before plot Time Series
+
+```{r}
+#| eval: FALSE
+
+table(export_long_filtered$Year, export_long_filtered$`Data Series`)
+
+```
+
+### **Plotting the slopegraph**
+
+```{r}
+newggslopegraph(export_long_filtered, Year, Export_Value, `Data Series`,
+                Title = "Export Trends Over Time",
+                SubTitle = "2020 - 2024",
+                Caption = "Prepared by: Huang Tzu Ting (Hannah)",
+                )
+```

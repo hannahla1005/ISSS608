@@ -280,13 +280,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
   <li><a href="#combine-both-export-and-import-data" id="toc-combine-both-export-and-import-data" class="nav-link" data-scroll-target="#combine-both-export-and-import-data">Combine both Export and Import Data</a></li>
   <li><a href="#visualizing-total-merchandise-trade" id="toc-visualizing-total-merchandise-trade" class="nav-link" data-scroll-target="#visualizing-total-merchandise-trade">Visualizing Total Merchandise Trade</a></li>
+  <li><a href="#calculate-the-change-percentage" id="toc-calculate-the-change-percentage" class="nav-link" data-scroll-target="#calculate-the-change-percentage">Calculate the Change Percentage</a></li>
+  <li><a href="#plot-annual-merchandise-trade" id="toc-plot-annual-merchandise-trade" class="nav-link" data-scroll-target="#plot-annual-merchandise-trade">Plot Annual Merchandise Trade</a></li>
   </ul></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a>
+  <li><a href="#exports-of-services-by-services-category-2024" id="toc-exports-of-services-by-services-category-2024" class="nav-link" data-scroll-target="#exports-of-services-by-services-category-2024"><strong>EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024</strong></a>
   <ul class="collapse">
   <li><a href="#select-categories" id="toc-select-categories" class="nav-link" data-scroll-target="#select-categories">Select Categories</a></li>
+  <li><a href="#classifying-service-trade-data-into-exports-and-imports" id="toc-classifying-service-trade-data-into-exports-and-imports" class="nav-link" data-scroll-target="#classifying-service-trade-data-into-exports-and-imports">Classifying Service Trade Data into Exports and Imports</a></li>
   <li><a href="#export-1" id="toc-export-1" class="nav-link" data-scroll-target="#export-1">Export</a></li>
   <li><a href="#import-1" id="toc-import-1" class="nav-link" data-scroll-target="#import-1">Import</a></li>
+  </ul></li>
+  <li><a href="#time-series" id="toc-time-series" class="nav-link" data-scroll-target="#time-series">Time Series</a>
+  <ul class="collapse">
+  <li><a href="#data-preparation-1" id="toc-data-preparation-1" class="nav-link" data-scroll-target="#data-preparation-1">Data Preparation</a></li>
+  <li><a href="#deal-with-missing-value" id="toc-deal-with-missing-value" class="nav-link" data-scroll-target="#deal-with-missing-value">Deal with Missing value</a></li>
+  <li><a href="#exterminate-every-column-before-plot-time-series" id="toc-exterminate-every-column-before-plot-time-series" class="nav-link" data-scroll-target="#exterminate-every-column-before-plot-time-series">Exterminate every column before plot Time Series</a></li>
+  <li><a href="#plotting-the-slopegraph" id="toc-plotting-the-slopegraph" class="nav-link" data-scroll-target="#plotting-the-slopegraph"><strong>Plotting the slopegraph</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -320,7 +329,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">March 7, 2025</p>
+      <p class="date-modified">March 9, 2025</p>
     </div>
   </div>
     
@@ -539,12 +548,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5  2024    1285864.</code></pre>
 </div>
 </div>
+</section>
+<section id="calculate-the-change-percentage" class="level3">
+<h3 class="anchored" data-anchor-id="calculate-the-change-percentage">Calculate the Change Percentage</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>total_trade_summary <span class="ot">&lt;-</span> trade_summary <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year) <span class="sc">%&gt;%</span>  <span class="co"># 確保年份是遞增排序</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Change =</span> Total_Trade <span class="sc">-</span> <span class="fu">lag</span>(Total_Trade),  <span class="co"># 計算變化值</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Change_Perc =</span> <span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> (Total_Trade <span class="sc">-</span> <span class="fu">lag</span>(Total_Trade)) <span class="sc">/</span> <span class="fu">lag</span>(Total_Trade), <span class="dv">1</span>))  <span class="co"># 計算變化率（%）</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="plot-annual-merchandise-trade" class="level3">
+<h3 class="anchored" data-anchor-id="plot-annual-merchandise-trade">Plot Annual Merchandise Trade</h3>
+<p>(Before)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Before_Trade.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>(After)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(combined_summary, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Value, <span class="at">fill =</span> <span class="fu">interaction</span>(Year, Type))) <span class="sc">+</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>, <span class="at">position =</span> <span class="fu">position_dodge2</span>(<span class="at">preserve =</span> <span class="st">"single"</span>)) <span class="sc">+</span>  <span class="co"># Import &amp; Export 並排</span></span>
@@ -604,6 +626,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>The updated version presents several key enhancements over the previous visualization :</p>
+<p><strong>Advantages</strong></p>
 <ol type="1">
 <li><p><strong>More Informative Representation</strong></p>
 <p><strong>- Added a line chart</strong>&nbsp;to track&nbsp;<strong>Total Merchandise Trade</strong>, making overall trade trends clearer.</p>
@@ -619,22 +642,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </section>
 </section>
-<section id="section" class="level2">
-<h2 class="anchored" data-anchor-id="section"></h2>
-</section>
-<section id="section-1" class="level2">
-<h2 class="anchored" data-anchor-id="section-1"></h2>
-<p><strong>EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024</strong></p>
+<section id="exports-of-services-by-services-category-2024" class="level2">
+<h2 class="anchored" data-anchor-id="exports-of-services-by-services-category-2024"><strong>EXPORTS OF SERVICES BY SERVICES CATEGORY, 2024</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>services_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"Data/Trade in Services.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>,  <span class="at">skip =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>services_data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/Trade in Services.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>, <span class="at">skip =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>services_2024 <span class="ot">&lt;-</span> services_data <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">`</span><span class="at">2024</span><span class="st">`</span>) <span class="sc">%&gt;%</span>  <span class="co"># 只選擇「類別名稱」和「2024 年值」</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Category =</span> <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">Value =</span> <span class="st">`</span><span class="at">2024</span><span class="st">`</span>)  <span class="co"># 重新命名欄位</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="st">`</span><span class="at">2024</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Category =</span> <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, <span class="at">Value =</span> <span class="st">`</span><span class="at">2024</span><span class="st">`</span>)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="select-categories" class="level3">
 <h3 class="anchored" data-anchor-id="select-categories">Select Categories</h3>
+<p>The given R code defines a specific set of service categories including:</p>
+<p><strong>Manufacturing Services, Maintenance and Repair, Transport, Travel, Insurance, Government Goods and Services, Construction, Financial Services, Telecommunications and IT, Charges for the Use of Intellectual Property, Personal and Recreational Services, and Other Business Services</strong>.&nbsp;</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 定義你要的類別</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>selected_categories <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -677,16 +698,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 # ℹ 14 more rows</code></pre>
 </div>
 </div>
+</section>
+<section id="classifying-service-trade-data-into-exports-and-imports" class="level3">
+<h3 class="anchored" data-anchor-id="classifying-service-trade-data-into-exports-and-imports">Classifying Service Trade Data into Exports and Imports</h3>
+<ul>
+<li><p><strong>Groups data by&nbsp;<code>Category</code>&nbsp;(<code>group_by(Category)</code>)</strong></p>
+<ul>
+<li>The dataset&nbsp;<code>filtered_services</code>&nbsp;is grouped by the&nbsp;<code>Category</code>&nbsp;column.</li>
+</ul></li>
+<li><p><strong>Assigns a row number within each category (<code>mutate(Row_Number = row_number())</code>)</strong></p>
+<ul>
+<li>A sequential number is assigned to each row within the same category.</li>
+</ul></li>
+<li><p><strong>Labels the first row as “Export” and the second as “Import” by using (<code>mutate(Type = ifelse(Row_Number == 1, "Export", "Import"))</code>)</strong></p>
+<ul>
+<li><p>If&nbsp;<code>Row_Number == 1</code>, it is labeled as&nbsp;<code>"Export"</code>.</p></li>
+<li><p>If&nbsp;<code>Row_Number &gt; 1</code>, it is labeled as&nbsp;<code>"Import"</code>.</p></li>
+</ul></li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 `group_by()` 讓 R 自動給相同的類別編號</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>selected_categories_NEW <span class="ot">&lt;-</span> filtered_services <span class="sc">%&gt;%</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row_Number =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span>  <span class="co"># 每個類別的出現順序</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="fu">ifelse</span>(Row_Number <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Export"</span>, <span class="st">"Import"</span>)) <span class="sc">%&gt;%</span>  <span class="co"># 第一個當作 Export，第二個當作 Import</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Row_Number)  <span class="co"># 移除輔助欄位</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(selected_categories_NEW)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>selected_categories_NEW <span class="ot">&lt;-</span> filtered_services <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Row_Number =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span>  <span class="co"># 每個類別的出現順序</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Type =</span> <span class="fu">ifelse</span>(Row_Number <span class="sc">==</span> <span class="dv">1</span>, <span class="st">"Export"</span>, <span class="st">"Import"</span>)) <span class="sc">%&gt;%</span>  <span class="co"># 第一個當作 Export，第二個當作 Import</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Row_Number)  <span class="co"># 移除輔助欄位</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(selected_categories_NEW)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 3
    Category                                                    Value Type  
@@ -714,9 +752,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="export-1" class="level3">
 <h3 class="anchored" data-anchor-id="export-1">Export</h3>
+<p>(Before)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Before_export.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
 </section>
 <section id="import-1" class="level3">
 <h3 class="anchored" data-anchor-id="import-1">Import</h3>
+<p>(Before)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Before_Import.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>(After)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>colors_export <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#1f77b4"</span>, <span class="st">"#ff7f0e"</span>, <span class="st">"#9467bd"</span>, <span class="st">"#d62728"</span>, <span class="st">"#2ca02c"</span>, <span class="st">"#8c564b"</span>, <span class="st">"#e377c2"</span>, <span class="st">"#7f7f7f"</span>,<span class="st">"#6C3365"</span>, <span class="st">"#408080"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -738,21 +789,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 顯示兩個圖</span></span>
 <span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>export_pie</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item" id="htmlwidget-1cee55761242e6e29d9c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-1cee55761242e6e29d9c">{"x":{"visdat":{"1580e6c68750a":["function () ","plotlyVisDat"]},"cur_data":"1580e6c68750a","attrs":{"1580e6c68750a":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","marker":{"colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"]},"hole":0.20000000000000001,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Exports of Services (2024)","hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Manufacturing Services On Physical Inputs Owned By Others","Maintenance And Repair Services","Transport","Travel","Insurance","Government Goods And Services","Construction","Financial","Telecommunications, Computer & Information","Charges For The Use Of Intellectual Property","Personal, Cultural And Recreational","Other Business Services"],"values":[0.47099999999999997,10.8201,172.97110000000001,31.8673,12.649799999999999,0.4773,2.1008,71.582700000000003,41.149800000000006,26.255800000000001,4.8310000000000004,153.39160000000001],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"marker":{"color":"rgba(31,119,180,1)","colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"],"line":{"color":"rgba(255,255,255,1)"}},"hole":0.20000000000000001,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-12be6578fdd219768a05" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-12be6578fdd219768a05">{"x":{"visdat":{"a48cefa157":["function () ","plotlyVisDat"]},"cur_data":"a48cefa157","attrs":{"a48cefa157":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","marker":{"colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"]},"hole":0.20000000000000001,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Exports of Services (2024)","hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Manufacturing Services On Physical Inputs Owned By Others","Maintenance And Repair Services","Transport","Travel","Insurance","Government Goods And Services","Construction","Financial","Telecommunications, Computer & Information","Charges For The Use Of Intellectual Property","Personal, Cultural And Recreational","Other Business Services"],"values":[0.47099999999999997,10.8201,172.97110000000001,31.8673,12.649799999999999,0.4773,2.1008,71.582700000000003,41.149800000000006,26.255800000000001,4.8310000000000004,153.39160000000001],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"marker":{"color":"rgba(31,119,180,1)","colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"],"line":{"color":"rgba(255,255,255,1)"}},"hole":0.20000000000000001,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>import_pie</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item" id="htmlwidget-367aa750404fc1092270" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-367aa750404fc1092270">{"x":{"visdat":{"1580e3ddc1b20":["function () ","plotlyVisDat"]},"cur_data":"1580e3ddc1b20","attrs":{"1580e3ddc1b20":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","marker":{"colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"]},"hole":0.20000000000000001,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Imports of Services (2024)","hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Manufacturing Services On Physical Inputs Owned By Others","Maintenance And Repair Services","Transport","Travel","Insurance","Government Goods And Services","Construction","Financial","Telecommunications, Computer & Information","Charges For The Use Of Intellectual Property","Personal, Cultural And Recreational","Other Business Services"],"values":[9.8651,1.891,162.01339999999999,41.790500000000002,10.6052,0.38369999999999999,1.0104,23.225300000000001,43.523099999999999,24.0625,1.8195999999999999,148.99170000000001],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"marker":{"color":"rgba(31,119,180,1)","colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"],"line":{"color":"rgba(255,255,255,1)"}},"hole":0.20000000000000001,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item" id="htmlwidget-b5ffd967ef610cce8b33" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-b5ffd967ef610cce8b33">{"x":{"visdat":{"a4848495d63":["function () ","plotlyVisDat"]},"cur_data":"a4848495d63","attrs":{"a4848495d63":{"labels":{},"values":{},"textinfo":"label+percent","hoverinfo":"label+value+percent","marker":{"colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"]},"hole":0.20000000000000001,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Imports of Services (2024)","hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Manufacturing Services On Physical Inputs Owned By Others","Maintenance And Repair Services","Transport","Travel","Insurance","Government Goods And Services","Construction","Financial","Telecommunications, Computer & Information","Charges For The Use Of Intellectual Property","Personal, Cultural And Recreational","Other Business Services"],"values":[9.8651,1.891,162.01339999999999,41.790500000000002,10.6052,0.38369999999999999,1.0104,23.225300000000001,43.523099999999999,24.0625,1.8195999999999999,148.99170000000001],"textinfo":"label+percent","hoverinfo":["label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent","label+value+percent"],"marker":{"color":"rgba(31,119,180,1)","colors":["#1f77b4","#ff7f0e","#9467bd","#d62728","#2ca02c","#8c564b","#e377c2","#7f7f7f","#6C3365","#408080"],"line":{"color":"rgba(255,255,255,1)"}},"hole":0.20000000000000001,"type":"pie","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>The updated version presents several key enhancements over the previous visualization :</p>
+<p><strong>Advantages</strong></p>
 <ol type="1">
 <li><p><strong>Interactive &amp; Dynamic</strong>&nbsp;– Hover to see exact values, zoom &amp; pan for better exploration.</p></li>
 <li><p><strong>Clearer Labels</strong>&nbsp;– Only major segments display labels, reducing clutter.</p></li>
 <li><p><strong>Better Color Differentiation</strong>&nbsp;– High-contrast colors make categories easier to distinguish.</p></li>
 </ol>
+</section>
+</section>
+<section id="time-series" class="level2">
+<h2 class="anchored" data-anchor-id="time-series">Time Series</h2>
+<section id="data-preparation-1" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation-1">Data Preparation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>export_long <span class="ot">&lt;-</span> export_long <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Export_Value =</span> <span class="fu">as.numeric</span>(Export_Value)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Export_Value), <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span> <span class="sc">!=</span> <span class="st">"Total All Markets"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(export_long<span class="sc">$</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
+</section>
+<section id="deal-with-missing-value" class="level3">
+<h3 class="anchored" data-anchor-id="deal-with-missing-value">Deal with Missing value</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>export_long <span class="ot">&lt;-</span> export_long <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">year</span>(Date))  <span class="co"># 從 Date 提取年份</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>export_long <span class="ot">&lt;-</span> export_long <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">factor</span>(Year)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2024</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">factor</span>(Year, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">2020</span>, <span class="dv">2024</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>export_long_filtered <span class="ot">&lt;-</span> export_long <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Export_Value =</span> <span class="fu">sum</span>(Export_Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="exterminate-every-column-before-plot-time-series" class="level3">
+<h3 class="anchored" data-anchor-id="exterminate-every-column-before-plot-time-series">Exterminate every column before plot Time Series</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(export_long_filtered<span class="sc">$</span>Year, export_long_filtered<span class="sc">$</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-the-slopegraph" class="level3">
+<h3 class="anchored" data-anchor-id="plotting-the-slopegraph"><strong>Plotting the slopegraph</strong></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">newggslopegraph</span>(export_long_filtered, Year, Export_Value, <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">Title =</span> <span class="st">"Export Trends Over Time"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">SubTitle =</span> <span class="st">"2020 - 2024"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">Caption =</span> <span class="st">"Prepared by: Huang Tzu Ting (Hannah)"</span>,</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="TakeHome_Ex02_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
