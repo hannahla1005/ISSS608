@@ -1,0 +1,30 @@
+project:
+  type: website
+  
+website:
+  title: "Visual Analytics Project - Group 1"
+  navbar:
+    left:
+    - text: "Project Proposal"
+      href: "Project/Project_Proposal/Project_Proposal.html"
+      
+    - text: "Shiny App"
+      href: https://brigittatsai.shinyapps.io/ISSS608_Group1/
+      
+    - text: "Meeting Minutes"
+      href: "Project/Meeting_Minutes/Meeting_Minutes1.html"
+      
+    - text: "Trial"
+      href: "Project/Trial/Trial.html"
+
+
+    right: 
+      - href: index.qmd
+        text: Home
+      - about.qmd
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+editor: visual
