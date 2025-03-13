@@ -39,6 +39,8 @@ website:
         href: Handson-Exercise/Handson_06/Handson_Ex06.html
       - text: "Hands-on Exercise 7"
         href: Handson-Exercise/Handson_07/Handson_Ex07.html
+      - text: "Hands-on Exercise 8"
+        href: Handson-Exercise/Handson_08/Handson_Ex08.html
     - text: "In-Class Exercise"
       menu:
       - text: "In-class Exercise 1"
